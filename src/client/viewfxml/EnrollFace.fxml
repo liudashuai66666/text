@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="799.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.EnrollButton">
+   <children>
+      <Button fx:id="EnrollConfirmButton" layoutX="65.0" layoutY="612.0" mnemonicParsing="false" onAction="#EnrollCLICK" prefHeight="41.0" prefWidth="453.0" style="-fx-background-color: #00BFFF;" text="确定">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="ReturnLoginButton" layoutX="65.0" layoutY="685.0" mnemonicParsing="false" onAction="#ReturnLogin" prefHeight="41.0" prefWidth="453.0" style="-fx-background-color: #00BFFF;" text="取消">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <TextField fx:id="EnrollEmail" layoutX="65.0" layoutY="456.0" onAction="#Email" prefHeight="30.0" prefWidth="453.0" promptText="Mailbox" />
+      <TextField fx:id="Captcha" layoutX="65.0" layoutY="546.0" onAction="#captcha" prefHeight="30.0" prefWidth="453.0" promptText="Captcha" />
+      <TextField fx:id="EnrollUsername" layoutX="64.0" layoutY="197.0" onAction="#Username" prefHeight="30.0" prefWidth="453.0" promptText="Username" />
+      <Label layoutX="65.0" layoutY="168.0" text="姓名">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="257.0" text="密码">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="347.0" text="再次确认密码">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="430.0" text="邮箱">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="518.0" text="验证码">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="SendCaptchaButton" layoutX="462.0" layoutY="456.0" mnemonicParsing="false" onAction="#SendCaptcha" prefHeight="30.0" prefWidth="56.0" text="发送" />
+      <AnchorPane prefHeight="136.0" prefWidth="581.0" style="-fx-background-color: #00BFFF;">
+         <children>
+            <ImageView fitHeight="104.0" fitWidth="158.0" layoutX="239.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../photo/1448364.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label fx:id="NameWarn" layoutX="104.0" layoutY="167.0" prefHeight="20.0" prefWidth="412.0" textFill="RED" />
+      <Label fx:id="PassWordWarn1" layoutX="104.0" layoutY="256.0" prefHeight="20.0" prefWidth="412.0" textFill="RED" />
+      <Label fx:id="PassWordWarn2" layoutX="151.0" layoutY="346.0" prefHeight="20.0" prefWidth="365.0" textFill="RED" />
+      <Label fx:id="MailboxWarn" layoutX="104.0" layoutY="429.0" prefHeight="20.0" prefWidth="412.0" textFill="RED" />
+      <Label fx:id="CaptchaWarn" layoutX="118.0" layoutY="517.0" prefHeight="20.0" prefWidth="397.0" textFill="RED" />
+      <Label fx:id="CountdownLabel" layoutX="518.0" layoutY="456.0" prefHeight="30.0" prefWidth="56.0" textAlignment="CENTER" />
+      <TextField fx:id="EnrollPassword1" layoutX="64.0" layoutY="281.0" prefHeight="30.0" prefWidth="453.0" promptText="Password" />
+      <PasswordField fx:id="EnrollPassword" layoutX="64.0" layoutY="281.0" onAction="#Password1" prefHeight="30.0" prefWidth="453.0" promptText="Password" />
+      <TextField fx:id="ConfirmPassword1" layoutX="64.0" layoutY="370.0" prefHeight="30.0" prefWidth="453.0" promptText="ConfirmPassword" />
+      <PasswordField fx:id="ConfirmPassword" layoutX="64.0" layoutY="370.0" onAction="#Password2" prefHeight="30.0" prefWidth="453.0" promptText="ConfirmPassword" />
+      <ImageView fx:id="openEye" fitHeight="30.0" fitWidth="39.0" layoutX="486.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/睁眼.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="close" layoutX="481.0" layoutY="281.0" mnemonicParsing="false" onAction="#Close" opacity="0.0" prefHeight="30.0" prefWidth="39.0" />
+      <ImageView fx:id="closeEye" fitHeight="30.0" fitWidth="39.0" layoutX="486.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/闭眼.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="open" layoutX="481.0" layoutY="281.0" mnemonicParsing="false" onAction="#Open" opacity="0.0" prefHeight="30.0" prefWidth="39.0" />
+   </children>
+</AnchorPane>

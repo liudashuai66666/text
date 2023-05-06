@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="661.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupChatButton">
+    <children>
+        <AnchorPane prefHeight="661.0" prefWidth="90.0" style="-fx-background-color: #292421;">
+            <children>
+                <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="23.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../photo/好友.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="43.0" fitWidth="42.0" layoutX="25.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../photo/群聊.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="GroupChatButton" layoutX="25.0" layoutY="284.0" mnemonicParsing="false" onAction="#GroupChat" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+                <Button fx:id="FriendsButton" layoutX="23.0" layoutY="164.0" mnemonicParsing="false" onAction="#Friends" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+                <StackPane layoutX="10.0" layoutY="16.0" prefHeight="70.0" prefWidth="70.0">
+                    <children>
+                        <ImageView fx:id="Avatar" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../photo/1448364.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="MyMessageButton" mnemonicParsing="false" onAction="#MyMessage" opacity="0.0" prefHeight="70.0" prefWidth="70.0" />
+                    </children>
+                </StackPane>
+                <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="23.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../photo/加号.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="addFriendButton" layoutX="23.0" layoutY="106.0" mnemonicParsing="false" onAction="#addFriend" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+                <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="24.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../photo/添加好友.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="FriendApplicationButton" layoutX="24.0" layoutY="223.0" mnemonicParsing="false" onAction="#FriendApplication" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+            </children>
+        </AnchorPane>
+        <ListView fx:id="ChatList" layoutX="90.0" prefHeight="661.0" prefWidth="232.0" />
+    </children>
+</AnchorPane>

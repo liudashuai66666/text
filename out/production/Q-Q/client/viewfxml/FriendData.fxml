@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="431.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.FriendDataButton">
+    <children>
+        <AnchorPane prefHeight="165.0" prefWidth="333.0" style="-fx-background-color: #808069;">
+            <children>
+                <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="14.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../photo/邮箱.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="Mailbox" layoutX="58.0" layoutY="124.0" prefHeight="24.0" prefWidth="258.0" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+        <Label fx:id="OnOffLine" layoutX="97.0" layoutY="91.0" prefHeight="20.0" prefWidth="74.0" text="在线" textFill="WHITE" />
+        <Label fx:id="Uname" layoutX="97.0" layoutY="42.0" prefHeight="49.0" prefWidth="236.0" textFill="WHITE">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="Avatar" fitHeight="76.0" fitWidth="74.0" layoutX="15.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../photo/1448364.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="Account" layoutX="61.0" layoutY="185.0" prefHeight="20.0" prefWidth="162.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="20.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../photo/qq.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="21.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../photo/用户.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="20.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../photo/签名.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="Sex" layoutX="61.0" layoutY="227.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="Birthday" layoutX="140.0" layoutY="228.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="Signature" layoutX="61.0" layoutY="273.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="Age" layoutX="89.0" layoutY="228.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

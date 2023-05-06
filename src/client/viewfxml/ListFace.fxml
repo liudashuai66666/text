@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="Pane" prefHeight="81.0" prefWidth="213.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.ListFaceButton">
+   <children>
+      <ImageView fx:id="Avatar" fitHeight="62.0" fitWidth="64.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="Name" layoutX="84.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.30029296875">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="432.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.LoginButton">
+    <children>
+        <ImageView fitHeight="439.0" fitWidth="772.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/v2-8299d5eae2d7c4ac66450baad1a1496a_r.jpg" />
+         </image></ImageView>
+        <ImageView fitHeight="56.0" fitWidth="64.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/1448364.png" />
+         </image>
+        </ImageView>
+        <Label layoutX="83.0" layoutY="42.0" text="Q-Q" textFill="#fffafa">
+            <font>
+                <Font size="24.0" />
+            </font></Label>
+        <TextField fx:id="LoginAccount" layoutX="227.0" layoutY="111.0" onAction="#JudgmentAccount" prefHeight="41.0" prefWidth="339.0" promptText="账号或者邮箱" />
+        <Button fx:id="LoginButtonConfirm" layoutX="227.0" layoutY="265.0" mnemonicParsing="false" onAction="#LoginCLICK" prefHeight="41.0" prefWidth="339.0" text="确定">
+            <font>
+                <Font size="20.0" />
+            </font></Button>
+        <RadioButton layoutX="479.0" layoutY="229.0" mnemonicParsing="false" text="记住密码" textFill="WHITE" />
+        <RadioButton layoutX="227.0" layoutY="229.0" mnemonicParsing="false" text="自动登录" textFill="WHITE" />
+        <Button fx:id="EnrollButton" layoutX="227.0" layoutY="331.0" mnemonicParsing="false" onAction="#EnrollAccount" prefHeight="41.0" prefWidth="339.0" text="注册账号">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Label fx:id="LabelDisplay" layoutX="362.0" layoutY="280.0" textFill="#f81515">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="ForgetButton" layoutX="678.0" layoutY="390.0" mnemonicParsing="false" onAction="#ForgetAccount" text="忘记密码" />
+      <TextField fx:id="LoginPassword1" layoutX="227.0" layoutY="176.0" prefHeight="41.0" prefWidth="339.0" promptText="密码" />
+      <PasswordField fx:id="LoginPassword" layoutX="227.0" layoutY="176.0" onAction="#JudgmentPassword" prefHeight="41.0" prefWidth="339.0" promptText="密码" />
+      <ImageView fx:id="openEye" fitHeight="41.0" fitWidth="56.0" layoutX="525.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/睁眼.png" />
+         </image></ImageView>
+      <Button fx:id="close" layoutX="525.0" layoutY="176.0" mnemonicParsing="false" onAction="#Close" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
+      <ImageView fx:id="closeEye" fitHeight="41.0" fitWidth="41.0" layoutX="525.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/闭眼.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="open" layoutX="525.0" layoutY="176.0" mnemonicParsing="false" onAction="#Open" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
+    </children>
+</AnchorPane>

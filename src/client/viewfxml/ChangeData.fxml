@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="542.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.ChangeDataButton">
+   <children>
+      <AnchorPane prefHeight="52.0" prefWidth="511.0" style="-fx-background-color: #00BFFF;" />
+      <Label layoutX="14.0" layoutY="98.0" text="昵     称" />
+      <TextField fx:id="ChooseName" layoutX="77.0" layoutY="93.0" prefHeight="30.0" prefWidth="161.0" />
+      <Label layoutX="264.0" layoutY="98.0" text="性     别" />
+      <Label layoutX="14.0" layoutY="151.0" text="生     日" />
+      <DatePicker fx:id="ChooseBirthday" layoutX="77.0" layoutY="146.0" prefHeight="30.0" prefWidth="161.0" />
+      <Label layoutX="14.0" layoutY="204.0" text="签     名" />
+      <ChoiceBox fx:id="ChooseSex" layoutX="328.0" layoutY="93.0" prefHeight="30.0" prefWidth="161.0" />
+      <TextArea fx:id="ChooseSignature" layoutX="77.0" layoutY="204.0" prefHeight="200.0" prefWidth="412.0" wrapText="true" />
+      <Button fx:id="CloseButton" layoutX="391.0" layoutY="491.0" mnemonicParsing="false" onAction="#Close" prefHeight="30.0" prefWidth="98.0" text="关闭" />
+      <Button fx:id="SaveButton" layoutX="24.0" layoutY="491.0" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="98.0" text="保存" />
+   </children>
+</AnchorPane>

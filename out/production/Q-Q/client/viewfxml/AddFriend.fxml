@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="407.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.AddFriendButton">
+   <children>
+      <TextField fx:id="FindFriendText" layoutX="49.0" layoutY="90.0" prefHeight="30.0" prefWidth="222.0" promptText="请输入邮箱或者账号" />
+      <Text layoutX="127.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="添加好友" wrappingWidth="150.30029296875">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button fx:id="FindFriendButton" layoutX="285.0" layoutY="90.0" mnemonicParsing="false" onAction="#FindFriend" text="查找" />
+      <ImageView fx:id="FriendAvater" fitHeight="150.0" fitWidth="150.0" layoutX="52.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/avatar/女头像2.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="FriendDataButton" layoutX="52.0" layoutY="164.0" mnemonicParsing="false" onAction="#FriendData" opacity="0.0" prefHeight="150.0" prefWidth="150.0" />
+      <Text fx:id="FriendAccount" layoutX="56.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="143.30029296875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="AddFriendButton" layoutX="245.0" layoutY="278.0" mnemonicParsing="false" onAction="#AddFriend" text="添加好友" />
+      <Text fx:id="FriendName" layoutX="56.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="143.30029296875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

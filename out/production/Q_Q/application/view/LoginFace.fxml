@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="432.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.LoginButton">
+    <children>
+        <ImageView fitHeight="439.0" fitWidth="772.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/v2-8299d5eae2d7c4ac66450baad1a1496a_r.jpg" />
+         </image></ImageView>
+        <ImageView fitHeight="56.0" fitWidth="64.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/1448364.png" />
+         </image>
+        </ImageView>
+        <Label layoutX="83.0" layoutY="42.0" text="Q-Q" textFill="#fffafa">
+            <font>
+                <Font size="24.0" />
+            </font></Label>
+        <TextField fx:id="LoginAccount" layoutX="227.0" layoutY="160.0" onAction="#JudgmentAccount" prefHeight="32.0" prefWidth="339.0" promptText="账号" />
+        <TextField fx:id="LoginPassword" layoutX="227.0" layoutY="211.0" onAction="#JudgmentPassword" prefHeight="32.0" prefWidth="339.0" promptText="密码" />
+        <Button fx:id="LoginButtonConfirm" layoutX="227.0" layoutY="285.0" mnemonicParsing="false" onAction="#LoginCLICK" prefHeight="41.0" prefWidth="339.0" text="确定">
+            <font>
+                <Font size="20.0" />
+            </font></Button>
+        <ImageView fitHeight="97.0" fitWidth="127.0" layoutX="647.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/65AAA051D4BCE1CB5170239EF6D9F099.jpg" />
+         </image></ImageView>
+        <Label layoutX="657.0" layoutY="400.0" text="联系管理员" textFill="#f2f0f0" />
+        <RadioButton layoutX="353.0" layoutY="249.0" mnemonicParsing="false" text="记住密码" textFill="WHITE" />
+        <RadioButton layoutX="227.0" layoutY="249.0" mnemonicParsing="false" text="自动登录" textFill="WHITE" />
+        <Label layoutX="506.0" layoutY="249.0" text="忘记密码" textFill="#f2f2f2" />
+        <Button fx:id="EnrollButton" layoutX="15.0" layoutY="390.0" mnemonicParsing="false" onAction="#EnrollAccount" text="注册账号" />
+      <Label fx:id="LabelDisplay" layoutX="362.0" layoutY="290.0" textFill="#f81515">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
