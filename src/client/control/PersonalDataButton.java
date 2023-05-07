@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -40,7 +41,7 @@ public class PersonalDataButton implements Initializable {
     @FXML
     private Label Sex;//性别
     @FXML
-    private Label Signature;//个性签名
+    private Text Signature;//个性签名
     @FXML
     private Label Birthday;//生日
     @FXML

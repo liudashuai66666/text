@@ -1,8 +1,10 @@
 package client.control;
 
+import application.MemoryUserApplication;
 import client.view.AddFriend;
 import client.view.PersonalData;
 import client.vo.FindUser;
+import client.vo.FriendList;
 import client.vo.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -70,9 +72,18 @@ public class NewFriendButton implements Initializable {
             addFriend.stagex.toFront();
         }
     }
+
     @FXML
     void FriendApplication(ActionEvent event) {
         System.out.println("好友申请");
+    }
+    public void addListview1(Friends friends){
+        ChatList.setCellFactory(param -> new CustomListCell("newFriend1"));
+        ChatList.getItems().add(friends);
+    }
+    public void addListview2(Friends friends){
+        ChatList.setCellFactory(param -> new CustomListCell("newFriend2"));
+        ChatList.getItems().add(friends);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,6 +92,20 @@ public class NewFriendButton implements Initializable {
         }else{
             Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
         }
+        ArrayList<Friends> data=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.newFriendList1) {
+            Friends friends=new Friends(m.getAvatar(),m.getUname());
+            data.add(friends);
+        }
+        ChatList.setCellFactory(param -> new CustomListCell("newFriend1"));
+        ChatList.getItems().addAll(data);
+        ArrayList<Friends> data1=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.newFriendList1) {
+            Friends friends=new Friends(m.getAvatar(),m.getUname());
+            data1.add(friends);
+        }
+        ChatList.setCellFactory(param -> new CustomListCell("newFriend2"));
+        ChatList.getItems().addAll(data1);
         flushed();
     }
     @FXML

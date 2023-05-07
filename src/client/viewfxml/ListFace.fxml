@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,13 +9,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="Pane" prefHeight="81.0" prefWidth="213.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.ListFaceButton">
+<AnchorPane fx:id="Pane" prefHeight="71.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.ListFaceButton">
    <children>
-      <ImageView fx:id="Avatar" fitHeight="62.0" fitWidth="64.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="Name" layoutX="84.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.30029296875">
+      <ImageView fx:id="Avatar" fitHeight="51.0" fitWidth="58.0" layoutX="6.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="Name" layoutX="66.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="88.30029296875">
          <font>
-            <Font size="20.0" />
+            <Font size="18.0" />
          </font>
       </Text>
+      <Button fx:id="okButton" layoutX="166.0" layoutY="6.0" mnemonicParsing="false" onAction="#ok" prefHeight="28.0" prefWidth="51.0" text="同意">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="noButton" layoutX="166.0" layoutY="37.0" mnemonicParsing="false" onAction="#no" prefHeight="25.0" prefWidth="51.0" text="拒绝">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Text fx:id="stateText" layoutX="147.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="58.0" />
    </children>
 </AnchorPane>

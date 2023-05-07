@@ -2,6 +2,9 @@ package client.view;
 
 import application.AllApplication;
 import application.EmailApplication;
+import client.control.GroupChatButton;
+import client.control.HallButton;
+import client.control.NewFriendButton;
 import client.vo.User;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -21,14 +24,22 @@ public class HallFace extends Application {
     private Parent page1;
     private Parent page2;
     private Parent page3;
-    //public static Stage stagex;
+    public static HallButton hallButton;
+    public static GroupChatButton groupChatButton;
+    public static NewFriendButton newFriendButton;
 
     @Override
     public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader1=new FXMLLoader(getClass().getResource("../viewfxml/Hall.fxml"));
+        FXMLLoader fxmlLoader2=new FXMLLoader(getClass().getResource("../viewfxml/GroupChatFace.fxml"));
+        FXMLLoader fxmlLoader3=new FXMLLoader(getClass().getResource("../viewfxml/NewFriend.fxml"));
         // 在构造函数中加载页面并初始化场景
-        page1 = FXMLLoader.load(getClass().getResource("../viewfxml/Hall.fxml"));
-        page2 = FXMLLoader.load(getClass().getResource("../viewfxml/GroupChatFace.fxml"));
-        page3 = FXMLLoader.load(getClass().getResource("../viewfxml/NewFriend.fxml"));
+        page1 = fxmlLoader1.load();
+        hallButton=fxmlLoader1.getController();
+        page2 = fxmlLoader2.load();
+        groupChatButton=fxmlLoader2.getController();
+        page3 = fxmlLoader3.load();
+        newFriendButton=fxmlLoader3.getController();
         scene = new Scene(page1, 965, 661);
 
         stage.setTitle("大厅");

@@ -4,6 +4,7 @@ import application.*;
 import client.view.EnrollFace;
 import client.view.ForgetFace;
 import client.view.HallFace;
+import client.vo.FindUser;
 import client.vo.FriendList;
 import client.vo.LoginUser;
 import client.vo.User;
@@ -99,7 +100,10 @@ public class LoginButton implements Initializable {
                 User.birthday = user.getBirthday();
                 User.signature = user.getSignature();
                 User.avatar = user.getAvatar();
-                FriendList.friendList= friendListData.getFriendList();
+                //
+                FriendList.friendList= friendListData.getFriendList();//好友列表
+                FriendList.newFriendList1=friendListData.getNewFriendList1();//好友请求列表
+                FriendList.newFriendList2=friendListData.getNewFriendList2();//
                 //
                 Stage stage = (Stage) EnrollButton.getScene().getWindow();
                 stage.close();//关闭当前窗口

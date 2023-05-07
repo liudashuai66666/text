@@ -1,11 +1,16 @@
 package application;
 
 import client.control.ChangeDataButton;
+import client.control.CustomListCell;
+import client.control.NewFriendButton;
 import client.control.PersonalDataButton;
 import client.view.ChangeData;
+import client.view.HallFace;
 import client.vo.FindUser;
 import client.vo.User;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import toolkind.Friends;
 
 import java.io.BufferedInputStream;
 import java.io.ObjectInputStream;
@@ -13,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collection;
 
 public class SendApplicationLong extends Thread {
 
@@ -21,11 +27,11 @@ public class SendApplicationLong extends Thread {
         try {
             System.out.println(User.socket);
             while (true) {
-                ObjectInputStream ois = new ObjectInputStream(User.socket.getInputStream());
                 System.out.println("等待服务端连接中...");
+                ObjectInputStream ois = new ObjectInputStream(User.socket.getInputStream());
                 Object obj1 = ois.readObject();
                 System.out.println("连接到了...");
-                receive(obj1);
+                receive(obj1);//处理反馈
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,11 +46,8 @@ public class SendApplicationLong extends Thread {
         System.out.println(flag);
         switch (flag) {
             case "修改头像":
-                String book = (String) application.getData();
-                System.out.println(book);
                 System.out.println("修改成功！");
                 User.avatar = "file:" + PersonalDataButton.selectedFile.getAbsolutePath();
-                System.out.println(User.avatar);
                 break;
             case "修改资料":
                 System.out.println("修改成功！");
@@ -61,8 +64,34 @@ public class SendApplicationLong extends Thread {
                 FindUser.birthday = user.getBirthday();
                 FindUser.signature = user.getSignature();
                 FindUser.avatar = user.getAvatar();
+                break;
             case "查找好友no":
                 System.out.println("该用户不存在");
+                break;
+            case "加个好友no":
+                System.out.println("该用户已经是你的好友");
+                break;
+            case "加个好友yes":
+                MemoryUserApplication data= (MemoryUserApplication) application.getData();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Friends newfriends=new Friends(data.getAvatar(), data.getUname());
+                        HallFace.newFriendButton.addListview1(newfriends);
+                    }
+                });
+                break;
+            case "有人想加你":
+                data = (MemoryUserApplication) application.getData();
+                System.out.println(data.getUname());
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Friends newfriends=new Friends(data.getAvatar(), data.getUname());
+                        HallFace.newFriendButton.addListview2(newfriends);
+                    }
+                });
+                break;
         }
     }
 }

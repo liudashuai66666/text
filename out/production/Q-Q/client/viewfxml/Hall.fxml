@@ -48,6 +48,6 @@
             <Button fx:id="FriendApplicationButton" layoutX="24.0" layoutY="223.0" mnemonicParsing="false" onAction="#FriendApplication" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
          </children>
       </AnchorPane>
-      <ListView fx:id="ChatList" layoutX="90.0" prefHeight="661.0" prefWidth="232.0" />
+      <ListView fx:id="ChatList" layoutX="90.0" prefHeight="661.0" prefWidth="244.0" />
    </children>
 </AnchorPane>

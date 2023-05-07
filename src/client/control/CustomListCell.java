@@ -14,6 +14,14 @@ import java.util.function.Function;
 
 public class CustomListCell extends ListCell<Friends> {
     private FXMLLoader fxmlLoader;
+    private String flag;
+
+    public CustomListCell() {
+    }
+
+    public CustomListCell(String flag) {
+        this.flag = flag;
+    }
 
     @Override
     protected void updateItem(Friends item, boolean empty) {
@@ -35,6 +43,13 @@ public class CustomListCell extends ListCell<Friends> {
             ListFaceButton listFaceButton = fxmlLoader.getController();
             listFaceButton.setImage(item.getAvatar());
             listFaceButton.setUname(item.getUname());
+            if(flag.equals("friend")){
+                listFaceButton.friend();
+            } else if (flag.equals("newFriend1")) {
+                listFaceButton.newFriend1();
+            }else if(flag.equals("newFriend2")){
+                listFaceButton.newFriend2();
+            }
             listFaceButton.setClickEvent(unused -> {//点击事件
                 System.out.println("Clicked: " + item);
                 return null;

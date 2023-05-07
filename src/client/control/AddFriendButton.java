@@ -78,7 +78,7 @@ public class AddFriendButton implements Initializable {
     void AddFriend(ActionEvent event) throws IOException {
         System.out.println("添加好友");
         //1.发送过去的数据
-        AddFriendApplication shuju=new AddFriendApplication(User.account,FindFriendText.getText());
+        AddFriendApplication shuju=new AddFriendApplication(User.account,FindUser.account,User.mailbox,FindUser.mailbox);//通过账号查找；
         //2.创建发送消息io流
         ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
         //发送请求

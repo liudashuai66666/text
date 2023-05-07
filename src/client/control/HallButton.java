@@ -52,10 +52,6 @@ public class HallButton implements Initializable {
     @FXML
     void FriendApplication(ActionEvent event) throws IOException {
         System.out.println("好友申请");
-        //发送好友列表请求;
-        //Socket socket =new Socket("127.0.0.1",7777);
-        //ObjectOutputStream oos = new ObjectOutputStream(User.socket.getOutputStream());
-        //oos.write("好友申请".getBytes());
         LoginButton.hall.switchToPage3();
     }
     @FXML
@@ -93,9 +89,8 @@ public class HallButton implements Initializable {
         for (MemoryUserApplication m : FriendList.friendList) {
             Friends friends=new Friends(m.getAvatar(),m.getUname());
             data.add(friends);
-            //System.out.println(friends.avatar);
         }
-        ChatList.setCellFactory(param -> new CustomListCell());
+        ChatList.setCellFactory(param -> new CustomListCell("friend"));
         ChatList.getItems().addAll(data);
         flushed();
     }
