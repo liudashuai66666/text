@@ -126,7 +126,7 @@ public class EnrollButton {
         String password = password1;
         EnrollApplication shuju = new EnrollApplication(uname, password, mailbox);
         //创建一个Socket对象
-        Socket socket = new Socket("127.0.0.1", 7777);
+        Socket socket = new Socket("127.0.0.1", 9999);
         //发送消息
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         //发送请求类型
@@ -200,7 +200,7 @@ public class EnrollButton {
         youxiang = EnrollEmail.getText();
         EmailApplication shuju = new EmailApplication(youxiang);
         //创建socket对象，与服务器建立连接
-        Socket socket = new Socket("127.0.0.1", 7777);
+        Socket socket = new Socket("127.0.0.1", 9999);
         //创建流
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         //发送邮箱指令

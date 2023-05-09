@@ -4,9 +4,11 @@ import client.control.ChangeDataButton;
 import client.control.CustomListCell;
 import client.control.NewFriendButton;
 import client.control.PersonalDataButton;
+import client.tool.FriendListDelete;
 import client.view.ChangeData;
 import client.view.HallFace;
 import client.vo.FindUser;
+import client.vo.FriendList;
 import client.vo.User;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -18,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class SendApplicationLong extends Thread {
@@ -76,19 +79,53 @@ public class SendApplicationLong extends Thread {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        Friends newfriends=new Friends(data.getAvatar(), data.getUname());
-                        HallFace.newFriendButton.addListview1(newfriends);
+                        //添加修改数据
+                        FriendList.newFriendList1.add(data);
+                        //刷新
+                        HallFace.newFriendButton.flush();
                     }
                 });
                 break;
             case "有人想加你":
                 data = (MemoryUserApplication) application.getData();
-                System.out.println(data.getUname());
+                System.out.println(data.getUname()+"想加你");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        Friends newfriends=new Friends(data.getAvatar(), data.getUname());
-                        HallFace.newFriendButton.addListview2(newfriends);
+                        //添加修改数据
+                        FriendList.newFriendList2.add(data);
+                        //刷新
+                        HallFace.newFriendButton.flush();
+                    }
+                });
+                break;
+            case "别人同意啦":
+                //添加修改数据
+                data= (MemoryUserApplication) application.getData();
+                System.out.println(data.getUname()+"已经是你的好友了！");
+                FriendListDelete.delete(FriendList.newFriendList1,data.getAccount());
+                FriendList.friendList.add(data);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        //刷新
+                        HallFace.hallButton.flush();
+                        HallFace.newFriendButton.flush();
+                    }
+                });
+                break;
+            case "别人拒绝啦":
+                //修改数据
+                data= (MemoryUserApplication) application.getData();
+                System.out.println(data.getUname()+"拒绝了你！");
+                FriendListDelete.delete(FriendList.newFriendList1,data.getAccount());
+                FriendList.newFriendList3.add(data);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        //刷新
+                        HallFace.hallButton.flush();
+                        HallFace.newFriendButton.flush();
                     }
                 });
                 break;

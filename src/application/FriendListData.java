@@ -8,14 +8,17 @@ public class FriendListData implements Serializable {
     private ArrayList<MemoryUserApplication> FriendList;
     private ArrayList<MemoryUserApplication> newFriendList1;
     private ArrayList<MemoryUserApplication> newFriendList2;
+    private ArrayList<MemoryUserApplication> newFriendList3;
 
     public FriendListData() {
     }
-    public FriendListData(MemoryUserApplication user, ArrayList<MemoryUserApplication> friendList, ArrayList<MemoryUserApplication> newFriendList1, ArrayList<MemoryUserApplication> newFriendList2) {
+
+    public FriendListData(MemoryUserApplication user, ArrayList<MemoryUserApplication> friendList, ArrayList<MemoryUserApplication> newFriendList1, ArrayList<MemoryUserApplication> newFriendList2, ArrayList<MemoryUserApplication> newFriendList3) {
         this.user = user;
         FriendList = friendList;
         this.newFriendList1 = newFriendList1;
         this.newFriendList2 = newFriendList2;
+        this.newFriendList3 = newFriendList3;
     }
 
     public MemoryUserApplication getUser() {
@@ -48,5 +51,13 @@ public class FriendListData implements Serializable {
 
     public void setNewFriendList2(ArrayList<MemoryUserApplication> newFriendList2) {
         this.newFriendList2 = newFriendList2;
+    }
+
+    public ArrayList<MemoryUserApplication> getNewFriendList3() {
+        return newFriendList3;
+    }
+
+    public void setNewFriendList3(ArrayList<MemoryUserApplication> newFriendList3) {
+        this.newFriendList3 = newFriendList3;
     }
 }

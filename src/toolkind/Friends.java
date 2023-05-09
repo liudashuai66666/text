@@ -1,29 +1,32 @@
 package toolkind;
 
+import application.MemoryUserApplication;
+import client.view.PersonalData;
+
 public class Friends {
-    public String avatar;//头像
-    public String uname;//用户名
+    private String flag;
+    private MemoryUserApplication user;
     public Friends() {
     }
 
-    public Friends(String avatar, String uname) {
-        this.avatar = avatar;
-        this.uname = uname;
+    public Friends(String flag, MemoryUserApplication user) {
+        this.flag = flag;
+        this.user = user;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getFlag() {
+        return flag;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
-    public String getUname() {
-        return uname;
+    public MemoryUserApplication getUser() {
+        return user;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUser(MemoryUserApplication user) {
+        this.user = user;
     }
 }

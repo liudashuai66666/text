@@ -13,7 +13,7 @@ public class MemoryUserApplication implements Serializable {
     private String avatar;//头像
     public MemoryUserApplication() {
     }
-    public MemoryUserApplication(String uname, String account, String sex, String mailbox, String birthday, String signature, String age,String avatar) {
+    public MemoryUserApplication(String uname, String account, String sex, String mailbox, String birthday, String signature, String age, String avatar) {
         this.uname = uname;
         this.account = account;
         this.sex = sex;

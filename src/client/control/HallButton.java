@@ -4,6 +4,7 @@ import application.EmailApplication;
 import application.MemoryUserApplication;
 import client.view.AddFriend;
 import client.view.HallFace;
+import client.view.ListFace;
 import client.view.PersonalData;
 import client.vo.FindUser;
 import client.vo.FriendList;
@@ -44,6 +45,14 @@ public class HallButton implements Initializable {
     @FXML
     private ListView<Friends> ChatList;
 
+    public ListView<Friends> getChatList() {
+        return ChatList;
+    }
+
+    public void setChatList(ListView<Friends> chatList) {
+        ChatList = chatList;
+    }
+
     @FXML
     void GroupChat(ActionEvent event) {
         System.out.println("群聊");
@@ -77,21 +86,25 @@ public class HallButton implements Initializable {
             addFriend.stagex.toFront();
         }
     }
-
+    public void flush(){
+        ChatList.getItems().clear();
+        ArrayList<Friends> data=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.friendList) {
+            Friends friends=new Friends("好友",m);
+            data.add(friends);
+        }
+        ChatList.getItems().addAll(data);
+        ChatList.refresh();
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ChatList.setCellFactory(param -> new CustomListCell());
         if(User.avatar!=null) {
             Avatar.setImage(new Image(User.avatar));
         }else{
             Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
         }
-        ArrayList<Friends> data=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.friendList) {
-            Friends friends=new Friends(m.getAvatar(),m.getUname());
-            data.add(friends);
-        }
-        ChatList.setCellFactory(param -> new CustomListCell("friend"));
-        ChatList.getItems().addAll(data);
+        flush();
         flushed();
     }
     @FXML

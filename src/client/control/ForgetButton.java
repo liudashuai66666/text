@@ -104,7 +104,7 @@ public class ForgetButton {
             String password = password1;
             ForgetApplication shuju = new ForgetApplication(mailbox, password);
             //创建一个Socket对象
-            Socket socket = new Socket("127.0.0.1", 7777);
+            Socket socket = new Socket("127.0.0.1", 9999);
             //发送消息
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             //发送请求对象
@@ -162,7 +162,7 @@ public class ForgetButton {
         System.out.println("发送邮件");
         youxiang = Email.getText();
         EmailApplication shuju = new EmailApplication(youxiang);
-        Socket socket = new Socket("127.0.0.1", 7777);
+        Socket socket = new Socket("127.0.0.1", 9999);
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(new AllApplication<>("邮箱", shuju));
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());

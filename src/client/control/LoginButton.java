@@ -72,7 +72,7 @@ public class LoginButton implements Initializable {
             //1.创建Socket对象
             //细节：在创建对象的同时会链接服务端
             //  如果连接不上，代码会报错；
-            Socket socket = new Socket("127.0.0.1", 7777);
+            Socket socket = new Socket("127.0.0.1", 9999);
             //2.发送消息IO流
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             //发送请求类型
@@ -102,8 +102,12 @@ public class LoginButton implements Initializable {
                 User.avatar = user.getAvatar();
                 //
                 FriendList.friendList= friendListData.getFriendList();//好友列表
-                FriendList.newFriendList1=friendListData.getNewFriendList1();//好友请求列表
-                FriendList.newFriendList2=friendListData.getNewFriendList2();//
+                FriendList.newFriendList1=friendListData.getNewFriendList1();//等待别人处理
+                FriendList.newFriendList2=friendListData.getNewFriendList2();//你处理你收到的好友请求
+                FriendList.newFriendList3=friendListData.getNewFriendList3();//你被拒绝了
+                for (MemoryUserApplication memoryUserApplication : FriendList.newFriendList2) {
+                    System.out.println(memoryUserApplication.getUname()+"想加你");
+                }
                 //
                 Stage stage = (Stage) EnrollButton.getScene().getWindow();
                 stage.close();//关闭当前窗口

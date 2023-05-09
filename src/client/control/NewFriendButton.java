@@ -2,6 +2,7 @@ package client.control;
 
 import application.MemoryUserApplication;
 import client.view.AddFriend;
+import client.view.ListFace;
 import client.view.PersonalData;
 import client.vo.FindUser;
 import client.vo.FriendList;
@@ -41,6 +42,14 @@ public class NewFriendButton implements Initializable {
     @FXML
     private Button FriendApplicationButton;
 
+    public ListView<Friends> getChatList() {
+        return ChatList;
+    }
+
+    public void setChatList(ListView<Friends> chatList) {
+        ChatList = chatList;
+    }
+
     @FXML
     void GroupChat(ActionEvent event) {
         System.out.println("群聊");
@@ -77,13 +86,28 @@ public class NewFriendButton implements Initializable {
     void FriendApplication(ActionEvent event) {
         System.out.println("好友申请");
     }
-    public void addListview1(Friends friends){
-        ChatList.setCellFactory(param -> new CustomListCell("newFriend1"));
-        ChatList.getItems().add(friends);
-    }
-    public void addListview2(Friends friends){
-        ChatList.setCellFactory(param -> new CustomListCell("newFriend2"));
-        ChatList.getItems().add(friends);
+    public void flush(){
+        ChatList.getItems().clear();
+        ArrayList<Friends> data2=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.newFriendList3) {
+            Friends friends=new Friends("被拒绝",m);
+            data2.add(friends);
+        }
+        ChatList.getItems().addAll(data2);
+        ArrayList<Friends> data=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.newFriendList1) {
+            Friends friends=new Friends("发送",m);
+            data.add(friends);
+        }
+        ChatList.getItems().addAll(data);
+        ArrayList<Friends> data1=new ArrayList<>();
+        for (MemoryUserApplication m : FriendList.newFriendList2) {
+            Friends friends=new Friends("接收",m);
+            data1.add(friends);
+            System.out.println(friends.getUser().getUname()+"想加你");
+        }
+        ChatList.getItems().addAll(data1);
+        ChatList.refresh();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,20 +116,8 @@ public class NewFriendButton implements Initializable {
         }else{
             Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
         }
-        ArrayList<Friends> data=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.newFriendList1) {
-            Friends friends=new Friends(m.getAvatar(),m.getUname());
-            data.add(friends);
-        }
-        ChatList.setCellFactory(param -> new CustomListCell("newFriend1"));
-        ChatList.getItems().addAll(data);
-        ArrayList<Friends> data1=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.newFriendList1) {
-            Friends friends=new Friends(m.getAvatar(),m.getUname());
-            data1.add(friends);
-        }
-        ChatList.setCellFactory(param -> new CustomListCell("newFriend2"));
-        ChatList.getItems().addAll(data1);
+        ChatList.setCellFactory(param -> new CustomListCell());
+        flush();
         flushed();
     }
     @FXML
@@ -136,6 +148,6 @@ public class NewFriendButton implements Initializable {
                     }
                 });
             }
-        }, 1000, 1000);//定时器的延迟时间及间隔时间
+        }, 500, 500);//定时器的延迟时间及间隔时间
     }
 }
