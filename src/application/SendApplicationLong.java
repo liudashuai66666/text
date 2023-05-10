@@ -110,6 +110,10 @@ public class SendApplicationLong extends Thread {
             ChatDataApplication data = (ChatDataApplication) application.getData();
             FriendChatList.map.put(Friend.friend.getAccount(),data.getChatList1());
             HallFace.hallButton.flushChat();
+        } else if (flag.equals("接收消息")) {
+            ChatData data= (ChatData) application.getData();
+            FriendChatList.map.get(Friend.friend.getAccount()).add(data);
+            HallFace.hallButton.flushChat();
         }
     }
 }
