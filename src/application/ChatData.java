@@ -8,10 +8,8 @@ public class ChatData implements Serializable {
     String sendUser;
     String receiver;
     String message_type;
-
     public ChatData() {
     }
-
     public ChatData(String message, String sendTime, String sendUser, String receiver, String message_type) {
         this.message = message;
         this.sendTime = sendTime;

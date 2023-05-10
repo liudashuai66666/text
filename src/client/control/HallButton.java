@@ -2,6 +2,7 @@ package client.control;
 
 import application.*;
 import client.view.AddFriend;
+import client.view.HallFace;
 import client.view.PersonalData;
 import client.vo.*;
 import application.ChatData;
@@ -14,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import toolkind.Friends;
@@ -21,6 +23,7 @@ import toolkind.Friends;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 //大厅
@@ -117,9 +120,20 @@ public class HallButton implements Initializable {
     }//发送图片
 
     @FXML
-    void send(ActionEvent event) {
+    void send(ActionEvent event) throws IOException {
         //发送消息
-
+        if(inputBox.getText().equals("")){
+            return;
+        }
+        String massage=inputBox.getText();
+        inputBox.clear();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+        ChatData shuju = new ChatData(massage,time,User.mailbox,Friend.friend.getMailbox(), "文本");
+        ObjectOutputStream oos =new ObjectOutputStream(User.socket.getOutputStream());
+        oos.writeObject(new AllApplication<>("发消息",shuju));
+        FriendChatList.map.get(Friend.friend.getAccount()).add(shuju);
+        HallFace.hallButton.flushChat();
     }//发送消息
     public void flushChat(){
         Platform.runLater(new Runnable() {
@@ -130,7 +144,6 @@ public class HallButton implements Initializable {
                 chatDataList.getItems().addAll(FriendChatList.map.get(Friend.friend.getAccount()));
             }
         });
-
     }
     public void flush(){
         ChatList.getItems().clear();
@@ -144,6 +157,8 @@ public class HallButton implements Initializable {
     }//刷新好友列表
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        TextSetOnKey();
+        sendButton.setDefaultButton(true);
         ChatList.setCellFactory(param -> new FriendListCell());
         chatDataList.setCellFactory(param -> new messageListCell());
         if(User.avatar!=null) {
@@ -201,6 +216,22 @@ public class HallButton implements Initializable {
 
     public void setFriend(MemoryUserApplication friend) {
         this.friend = friend;
+    }
+
+    public void TextSetOnKey(){
+        inputBox.setOnKeyPressed(event -> {
+            if(event.isControlDown()&& event.getCode()== KeyCode.ENTER){
+                //按下Ctrl+Enter，插入换行符
+                inputBox.insertText(inputBox.getCaretPosition(),"\n");
+            }else if(event.getCode()==KeyCode.ENTER){
+                event.consume();
+                try {
+                    send(null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }
 
