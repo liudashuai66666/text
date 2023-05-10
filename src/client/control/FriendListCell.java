@@ -1,21 +1,19 @@
 package client.control;
 
-import client.view.ListFace;
+import client.view.HallFace;
+import client.vo.Friend;
+import client.vo.FriendChatList;
+import client.vo.FriendList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import toolkind.Friends;
 
 import java.io.IOException;
-import java.util.function.Function;
 
-public class CustomListCell extends ListCell<Friends> {
+public class FriendListCell extends ListCell<Friends> {
     private FXMLLoader fxmlLoader;
 
-    public CustomListCell() {
+    public FriendListCell() {
     }
 
 
@@ -38,7 +36,17 @@ public class CustomListCell extends ListCell<Friends> {
             ListFaceButton listFaceButton = fxmlLoader.getController();
             listFaceButton.setListView(item);
             listFaceButton.setClickEvent(unused -> {//点击事件
-                System.out.println("Clicked: " + item);
+                System.out.println(item.getUser().getUname()+"在和你聊天");
+                try {
+                    Friend.friend=item.getUser();
+                    if(FriendChatList.map.get(Friend.friend.getAccount())==null){
+                        HallFace.hallButton.beginChat(item.getUser());
+                    }else{
+                        HallFace.hallButton.flushChat();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return null;
             });
             setText(null);

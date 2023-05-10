@@ -72,7 +72,7 @@ public class LoginButton implements Initializable {
             //1.创建Socket对象
             //细节：在创建对象的同时会链接服务端
             //  如果连接不上，代码会报错；
-            Socket socket = new Socket("127.0.0.1", 9999);
+            Socket socket = new Socket("127.0.0.1", 8888);
             //2.发送消息IO流
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             //发送请求类型

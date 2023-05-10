@@ -79,26 +79,22 @@ public class ListFaceButton {
         Avatar.setImage(new Image(user.getAvatar()));
         Name.setText(user.getUname());
         if(friends.getFlag().equals("好友")){
-            okButton.setOpacity(0);
-            noButton.setOpacity(0);
-            okButton.setDisable(true);
-            noButton.setDisable(true);
-            stateText.setDisable(true);
+            okButton.setVisible(false);
+            noButton.setVisible(false);
+            stateText.setVisible(false);
         } else if (friends.getFlag().equals("发送")) {
-            okButton.setOpacity(0);
-            noButton.setOpacity(0);
-            okButton.setDisable(true);
-            noButton.setDisable(true);
-            stateText.setDisable(true);
+            okButton.setVisible(false);
+            noButton.setVisible(false);
+            stateText.setVisible(true);
             stateText.setText("待对方处理中");
         } else if (friends.getFlag().equals("接收")) {
-            stateText.setDisable(true);
+            stateText.setVisible(false);
+            okButton.setVisible(true);
+            noButton.setVisible(true);
         } else if (friends.getFlag().equals("被拒绝")) {
-            okButton.setOpacity(0);
-            noButton.setOpacity(0);
-            okButton.setDisable(true);
-            noButton.setDisable(true);
-            stateText.setDisable(true);
+            okButton.setVisible(false);
+            noButton.setVisible(false);
+            stateText.setVisible(true);
             stateText.setText("对方拒绝了你");
         }
     }

@@ -2,7 +2,6 @@ package client.control;
 
 import application.MemoryUserApplication;
 import client.view.AddFriend;
-import client.view.ListFace;
 import client.view.PersonalData;
 import client.vo.FindUser;
 import client.vo.FriendList;
@@ -116,7 +115,7 @@ public class NewFriendButton implements Initializable {
         }else{
             Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
         }
-        ChatList.setCellFactory(param -> new CustomListCell());
+        ChatList.setCellFactory(param -> new FriendListCell());
         flush();
         flushed();
     }

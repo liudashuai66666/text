@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="661.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.HallButton">
+<AnchorPane prefHeight="661.0" prefWidth="965.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.HallButton">
    <children>
       <AnchorPane prefHeight="661.0" prefWidth="90.0" style="-fx-background-color: #292421;">
          <children>
@@ -49,5 +50,31 @@
          </children>
       </AnchorPane>
       <ListView fx:id="ChatList" layoutX="90.0" prefHeight="661.0" prefWidth="236.0" />
+      <ListView fx:id="chatDataList" layoutX="326.0" prefHeight="506.0" prefWidth="642.0" />
+      <TextArea fx:id="inputBox" layoutX="326.0" layoutY="545.0" prefHeight="70.0" prefWidth="642.0" style="-fx-background-color: #ffffff;" wrapText="true" />
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="338.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/表情包.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="389.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/文件.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="442.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/相册.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="emojis" layoutX="338.0" layoutY="506.0" mnemonicParsing="false" onAction="#onEmojis" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="file" layoutX="389.0" layoutY="506.0" mnemonicParsing="false" onAction="#onFile" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="image" layoutX="442.0" layoutY="506.0" mnemonicParsing="false" onAction="#onImage" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="sendButton" layoutX="851.0" layoutY="618.0" mnemonicParsing="false" onAction="#send" prefHeight="34.0" prefWidth="90.0" text="发送">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <AnchorPane fx:id="calico" layoutX="326.0" prefHeight="661.0" prefWidth="642.0" style="-fx-background-color: #ffffff;" />
    </children>
 </AnchorPane>
