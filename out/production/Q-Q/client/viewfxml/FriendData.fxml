@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -23,6 +24,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
+            <Button fx:id="DeleteFriendButton" layoutX="237.0" layoutY="9.0" mnemonicParsing="false" onAction="#DeleteFriend" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #808069;" text="删除好友" textFill="#da1f1f" />
             </children></AnchorPane>
         <Label fx:id="OnOffLine" layoutX="97.0" layoutY="91.0" prefHeight="20.0" prefWidth="74.0" text="在线" textFill="WHITE" />
         <Label fx:id="Uname" layoutX="97.0" layoutY="42.0" prefHeight="49.0" prefWidth="236.0" textFill="WHITE">

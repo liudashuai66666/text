@@ -1,5 +1,8 @@
 package client.control;
 
+import application.MemoryUserApplication;
+import client.view.FriendData;
+import client.view.PersonalData;
 import client.vo.Friend;
 import client.vo.User;
 import javafx.event.ActionEvent;
@@ -11,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import application.ChatData;
+import javafx.stage.Stage;
 
 import java.util.function.Function;
 
@@ -41,16 +45,29 @@ public class ChatDataListButton {
     private Button myDataButton;//看自己资料按钮，可以修改资料
     private Function<Void, Void> clickEvent;
     @FXML
-    void friendData(ActionEvent event) {
-
+    void friendData(ActionEvent event) throws Exception {
+        FriendData friendData=new FriendData();
+        if(!FriendData.stagex.isShowing()){
+            friendData.start(new Stage());
+            FriendData.friendDataButton.flush(Friend.friend,"好友");
+        }else{
+            FriendData.stagex.close();
+            friendData.start(new Stage());
+            FriendData.friendDataButton.flush(Friend.friend,"好友");
+            FriendData.stagex.toFront();
+        }
     }
 
     @FXML
-    void myData(ActionEvent event) {
-
+    void myData(ActionEvent event) throws Exception {
+        PersonalData personalData = new PersonalData();
+        if(!PersonalData.stagex.isShowing()){
+            personalData.start(new Stage());
+        }else{
+            PersonalData.stagex.toFront();
+        }
     }
     public void setChatDataListView(ChatData data){
-        //System.out.println(data.getMessage());
         if(data.getSendUser().equals(User.mailbox)){
             friendImage.setVisible(false);
             friendMessage.setVisible(false);

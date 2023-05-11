@@ -91,14 +91,7 @@ public class HallButton implements Initializable {
         System.out.println("添加好友");
         AddFriend addFriend = new AddFriend();
         if(!addFriend.stagex.isShowing()){
-            FindUser.uname=null;
-            FindUser.account = null;
-            FindUser.mailbox = null;
-            FindUser.sex = null;
-            FindUser.age = null;
-            FindUser.birthday = null;
-            FindUser.signature = null;
-            FindUser.avatar = null;
+            FindUser.findUser=null;
             addFriend.start(new Stage());
         }else{
             addFriend.stagex.toFront();
@@ -212,6 +205,14 @@ public class HallButton implements Initializable {
 
     public MemoryUserApplication getFriend() {
         return friend;
+    }
+
+    public AnchorPane getCalico() {
+        return calico;
+    }
+
+    public void setCalico(AnchorPane calico) {
+        this.calico = calico;
     }
 
     public void setFriend(MemoryUserApplication friend) {

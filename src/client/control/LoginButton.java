@@ -113,8 +113,8 @@ public class LoginButton implements Initializable {
                 stage.close();//关闭当前窗口
                 hall = new HallFace();
                 hall.start(new Stage());
-                System.out.println(User.avatar);
-                System.out.println(User.mailbox);
+                /*System.out.println(User.avatar);
+                System.out.println(User.mailbox);*/
                 User.socket=socket;
                 System.out.println("登录成功！");
                 SendApplicationLong sendApplicationLong = new SendApplicationLong();
@@ -123,12 +123,10 @@ public class LoginButton implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("密码错误或者该账号已经登录");
                 alert.show();
-                System.out.println("密码错误！");
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("该账号或者该邮箱不存在!!!");
                 alert.show();
-                System.out.println("该账号或者该邮箱不存在！");
             }
         }
 
@@ -174,7 +172,6 @@ public class LoginButton implements Initializable {
 
     @FXML
     void Open(ActionEvent event) {
-        System.out.println(LoginPassword.getText());
         LoginPassword1.setText(LoginPassword.getText());
         LoginPassword.setText("");
         LoginPassword1.setPromptText(LoginPassword.getPromptText());

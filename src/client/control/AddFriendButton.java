@@ -68,6 +68,7 @@ public class AddFriendButton implements Initializable {
         FriendData friendData=new FriendData();
         if(!FriendData.stagex.isShowing()){
             friendData.start(new Stage());
+            FriendData.friendDataButton.flush(FindUser.findUser,"未添加");
         }else{
             FriendData.stagex.toFront();
         }
@@ -78,7 +79,7 @@ public class AddFriendButton implements Initializable {
     void AddFriend(ActionEvent event) throws IOException {
         System.out.println("添加好友");
         //1.发送过去的数据
-        AddFriendApplication shuju=new AddFriendApplication(User.account,FindUser.account,User.mailbox,FindUser.mailbox);//通过账号查找；
+        AddFriendApplication shuju=new AddFriendApplication(User.account,FindUser.findUser.getAccount(),User.mailbox,FindUser.findUser.getMailbox());//通过账号查找；
         //2.创建发送消息io流
         ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
         //发送请求
@@ -87,14 +88,10 @@ public class AddFriendButton implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(FindUser.account!=null){
-            FriendAccount.setText(FindUser.account);
-            FriendName.setText(FindUser.uname);
-            if(FindUser.avatar!=null) {
-                FriendAvater.setImage(new Image(FindUser.avatar));
-            }else{
-                FriendAvater.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
-            }
+        if(FindUser.findUser!=null){
+            FriendAccount.setText(FindUser.findUser.getAccount());
+            FriendName.setText(FindUser.findUser.getUname());
+            FriendAvater.setImage(new Image(FindUser.findUser.getAvatar()));
             FriendName.setOpacity(1);
             FriendAvater.setOpacity(1);
             AddFriendButton.setOpacity(1);
@@ -117,14 +114,10 @@ public class AddFriendButton implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            if(FindUser.account!=null){
-                                FriendAccount.setText(FindUser.account);
-                                FriendName.setText(FindUser.uname);
-                                if(FindUser.avatar!=null) {
-                                    FriendAvater.setImage(new Image(FindUser.avatar));
-                                }else{
-                                    FriendAvater.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
-                                }
+                            if(FindUser.findUser!=null){
+                                FriendAccount.setText(FindUser.findUser.getAccount());
+                                FriendName.setText(FindUser.findUser.getUname());
+                                FriendAvater.setImage(new Image(FindUser.findUser.getAvatar()));
                                 FriendName.setOpacity(1);
                                 FriendAvater.setOpacity(1);
                                 AddFriendButton.setOpacity(1);

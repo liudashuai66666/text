@@ -192,7 +192,6 @@ public class ForgetButton {
                     Time++;
                     try {
                         Thread.sleep(1000);
-                        System.out.println(Time);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -214,7 +213,6 @@ public class ForgetButton {
 
     @FXML
     void Open(ActionEvent event) {
-        System.out.println(Password.getText());
         Password1.setText(Password.getText());
         Password.setText("");
         Password1.setPromptText(Password.getPromptText());

@@ -233,7 +233,6 @@ public class EnrollButton {
                     Time++;
                     try {
                         Thread.sleep(1000);
-                        System.out.println(Time);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -266,7 +265,6 @@ public class EnrollButton {
     }
     @FXML
     void Open(ActionEvent event) {
-        System.out.println(EnrollPassword.getText());
         EnrollPassword1.setText(EnrollPassword.getText());
         EnrollPassword.setText("");
         EnrollPassword1.setPromptText(EnrollPassword.getPromptText());

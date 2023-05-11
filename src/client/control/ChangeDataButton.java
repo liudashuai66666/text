@@ -96,6 +96,7 @@ public class ChangeDataButton implements Initializable {
         User.birthday = String.valueOf(ChooseBirthday.getValue());
         User.signature = ChooseSignature.getText();
         User.uname = ChooseName.getText();
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

@@ -1,17 +1,24 @@
 package client.control;
 
-import client.vo.FindUser;
-import client.vo.User;
+import application.AddFriendApplication;
+import application.AllApplication;
+import application.MemoryUserApplication;
+import client.tool.FriendListDelete;
+import client.view.HallFace;
+import client.vo.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FriendDataButton implements Initializable {
+public class FriendDataButton {
 
     @FXML
     private Label Uname;
@@ -40,19 +47,62 @@ public class FriendDataButton implements Initializable {
     @FXML
     private Label OnOffLine;
 
-    @Override
+    @FXML
+    private Button DeleteFriendButton;//删除按钮
+
+    @FXML
+    void DeleteFriend(ActionEvent event) throws IOException {
+        System.out.println("你要删除该好友!");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("确认对话框");
+        alert.setHeaderText("请确认您的操作");
+        alert.setContentText("是否删除该好友！");
+// 添加“确认”和“取消”按钮
+        ButtonType okButton = new ButtonType("确认", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("取消", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+// 设置点击回调函数
+        alert.setResultConverter(buttonType -> {
+            if (buttonType == okButton) {
+                //1.先在自己的列表里面将该用户的数据删除，然后发送请求给服务端，在服务端里面将该条好友消息清除，然后再反馈给你删除的那个好友删除记录
+                try {
+                    ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+                    AddFriendApplication shuju=new AddFriendApplication(User.account,Friend.friend.getAccount(),User.mailbox,Friend.friend.getMailbox());
+                    oos.writeObject(new AllApplication<>("删除好友",shuju));
+                    FriendListDelete.delete(FriendList.friendList,Friend.friend.getAccount());
+                    //刷新
+                    HallFace.hallButton.getCalico().setVisible(true);
+                    HallFace.hallButton.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (buttonType == cancelButton) {
+                alert.close();
+            }
+            return null;
+        });
+        alert.show();
+
+    }
+/*    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Uname.setText(FindUser.uname);
-        Account.setText(FindUser.account);
-        Sex.setText(FindUser.sex);
-        Signature.setText(FindUser.signature);
-        Birthday.setText(FindUser.birthday);
-        Age.setText(FindUser.age);
-        Mailbox.setText(FindUser.mailbox);
-        if(FindUser.avatar!=null) {
-            Avatar.setImage(new Image(FindUser.avatar));
+        DeleteFriendButton.setVisible(false);
+        flush(Friend.friend);
+    }*/
+    public void flush(MemoryUserApplication user,String flag){
+        //DeleteFriendButton.setVisible(true);//删除好友按钮
+        if(flag.equals("未添加")){
+            DeleteFriendButton.setVisible(false);
         }else{
-            Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
+            DeleteFriendButton.setVisible(true);
         }
+        Uname.setText(user.getUname());
+        Account.setText(user.getAccount());
+        Sex.setText(user.getSex());
+        Signature.setText(user.getSignature());
+        Birthday.setText(user.getBirthday());
+        Age.setText(user.getAge());
+        Mailbox.setText(user.getMailbox());
+        Avatar.setImage(new Image(user.getAvatar()));
     }
 }
