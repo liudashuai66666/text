@@ -4,10 +4,7 @@ import application.*;
 import client.view.EnrollFace;
 import client.view.ForgetFace;
 import client.view.HallFace;
-import client.vo.FindUser;
-import client.vo.FriendList;
-import client.vo.LoginUser;
-import client.vo.User;
+import client.vo.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -87,11 +84,11 @@ public class LoginButton implements Initializable {
             String s = new String(bys, 0, len);
             int flag = Integer.parseInt(s);
             if (flag == 1) {
-
                 //得到服务端传回的用户信息；
                 //ObjectInputStream ois1 = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 FriendListData friendListData = (FriendListData) ois.readObject();
                 MemoryUserApplication user = friendListData.getUser();
+                Friend.friend=user;
                 User.uname = user.getUname();
                 User.account = user.getAccount();
                 User.mailbox = user.getMailbox();
@@ -113,8 +110,6 @@ public class LoginButton implements Initializable {
                 stage.close();//关闭当前窗口
                 hall = new HallFace();
                 hall.start(new Stage());
-                /*System.out.println(User.avatar);
-                System.out.println(User.mailbox);*/
                 User.socket=socket;
                 System.out.println("登录成功！");
                 SendApplicationLong sendApplicationLong = new SendApplicationLong();

@@ -8,6 +8,7 @@ import client.vo.*;
 import application.ChatData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,20 +17,29 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import toolkind.Friends;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //大厅
 public class HallButton implements Initializable {
     @FXML
-    private Button emojis;//表情包按钮
+    private Button emojisButton;//表情包按钮
     @FXML
     private Button image;//图片按钮
     @FXML
@@ -43,6 +53,8 @@ public class HallButton implements Initializable {
     @FXML
     private AnchorPane calico;//遮挡板
     private MemoryUserApplication friend;//该聊天界面的聊天对象
+    @FXML
+    private ListView Emojis;//表情包预览
 
 
     @FXML
@@ -61,6 +73,11 @@ public class HallButton implements Initializable {
 
     @FXML
     private ListView<Friends> ChatList;//好友列表
+    private static int cnt=0;
+
+    public final String dizhi="D:/QQ/2385272606/FileRecv/静态/";
+    public static String path;
+
 
     public ListView<Friends> getChatList() {
         return ChatList;
@@ -99,17 +116,49 @@ public class HallButton implements Initializable {
     }//添加好友方法
     @FXML
     void onEmojis(ActionEvent event) {
-
+        if(cnt%2==0){
+            Emojis.setVisible(true);
+            cnt++;
+            System.out.println(cnt);
+        }else{
+            Emojis.setVisible(false);
+            cnt++;
+            System.out.println(cnt);
+        }
     }//发送表情包
 
     @FXML
     void onFile(ActionEvent event) {
-
+        System.out.println("发文件");
     }//发送文件
 
     @FXML
-    void onImage(ActionEvent event) {
-
+    void onImage(ActionEvent event) throws IOException {
+        //System.out.println("发图片");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("发送图片");//设置窗口名字
+        fileChooser.setInitialDirectory(new File("D:\\图片"));//打开的位置
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PNG","*.jpg","*.gif","*.png"));//选择指定文件类型
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if(selectedFile!=null){
+            path=selectedFile.getAbsolutePath();
+            System.out.println("您选择的图片是："+selectedFile.getName());
+            byte[] bytes=Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            oos.writeObject(new AllApplication<>("图片",new ImageApplication(2,selectedFile.getName(),bytes,User.mailbox,Friend.friend.getMailbox())));
+            FileOutputStream fos=new FileOutputStream("D:\\图片\\"+selectedFile.getName());
+            fos.write(bytes);
+        }else {
+            return;
+        }
+        ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+        ChatData shuju = new ChatData(selectedFile.getName(),time,User.mailbox,Friend.friend.getMailbox(), "图片");
+        oos.writeObject(new AllApplication<>("发消息",shuju));
+        FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
+        HallFace.hallButton.flushChat();
     }//发送图片
 
     @FXML
@@ -122,10 +171,23 @@ public class HallButton implements Initializable {
         inputBox.clear();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+        String s="\\[(.*?)\\]";
+        Pattern pattern=Pattern.compile(s);
+        Matcher matcher=pattern.matcher(massage);
+        while(matcher.find()){
+            String FileName=matcher.group(1);
+            if(FilePan(dizhi+FileName)){
+                File file=new File(dizhi+FileName);
+                System.out.println(file);
+                byte[] fileBytes= Files.readAllBytes(Paths.get(dizhi+FileName));
+                ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+                oos.writeObject(new AllApplication<>("图片",new ImageApplication(1,FileName,fileBytes,User.mailbox,Friend.friend.getMailbox())));
+            }
+        }
         ChatData shuju = new ChatData(massage,time,User.mailbox,Friend.friend.getMailbox(), "文本");
         ObjectOutputStream oos =new ObjectOutputStream(User.socket.getOutputStream());
         oos.writeObject(new AllApplication<>("发消息",shuju));
-        FriendChatList.map.get(Friend.friend.getAccount()).add(shuju);
+        FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
         HallFace.hallButton.flushChat();
     }//发送消息
     public void flushChat(){
@@ -134,23 +196,30 @@ public class HallButton implements Initializable {
             public void run() {
                 calico.setVisible(false);
                 chatDataList.getItems().clear();
-                chatDataList.getItems().addAll(FriendChatList.map.get(Friend.friend.getAccount()));
+                chatDataList.getItems().addAll(FriendChatList.map.get(Friend.friend.getMailbox()));
             }
         });
     }
     public void flush(){
-        ChatList.getItems().clear();
-        ArrayList<Friends> data=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.friendList) {
-            Friends friends=new Friends("好友",m);
-            data.add(friends);
-        }
-        ChatList.getItems().addAll(data);
-        ChatList.refresh();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ChatList.getItems().clear();
+                ArrayList<Friends> data=new ArrayList<>();
+                for (MemoryUserApplication m : FriendList.friendList) {
+                    Friends friends=new Friends("好友",m);
+                    data.add(friends);
+                }
+                ChatList.getItems().addAll(data);
+                ChatList.refresh();
+            }
+        });
+
     }//刷新好友列表
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TextSetOnKey();
+        Emojis.setVisible(false);
         sendButton.setDefaultButton(true);
         ChatList.setCellFactory(param -> new FriendListCell());
         chatDataList.setCellFactory(param -> new messageListCell());
@@ -161,6 +230,41 @@ public class HallButton implements Initializable {
         }
         flush();
         flushed();
+        Emojis.setStyle("-fx-background-color: #ffffff; -fx-selection-bar: transparent; -fx-cell-focus-inner-border: transparent;");
+        String weizhi="D:/QQ/2385272606/FileRecv/静态";
+        File file=new File(weizhi);
+        File[] filesInFolder = file.listFiles();
+        int i=0;
+        HBox hBox = null;
+        for(File file1 :filesInFolder)
+        {
+            if(i==0)
+            {
+                hBox=new HBox();
+            }
+            if(i<20) {
+                ImageView imageView = new ImageView(new Image(file1.toURI().toString(),30,30,false,true));
+                EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {//表情包的点击事件
+                        inputBox.insertText(inputBox.getCaretPosition(),"["+file1.getName()+"]");
+                    }
+                };
+                imageView.setOnMouseClicked(eventHandler);
+                hBox.getChildren().add(imageView);
+            }
+            i++;
+            if(i==20)
+            {
+                i=0;
+                Emojis.getItems().add(hBox);
+            }
+        }
+        if(i>0)
+        {
+            Emojis.getItems().add(hBox);
+        }
+
     }//界面初始化
     @FXML
     void MyMessage(ActionEvent event) throws Exception {
@@ -181,11 +285,7 @@ public class HallButton implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            if(User.avatar!=null) {
-                                Avatar.setImage(new Image(User.avatar));
-                            }else{
-                                Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
-                            }
+                            Avatar.setImage(new Image(User.avatar));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -233,6 +333,10 @@ public class HallButton implements Initializable {
                 }
             }
         });
+    }
+    public static boolean FilePan(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
     }
 }
 

@@ -3,5 +3,5 @@ package client.vo;
 import application.MemoryUserApplication;
 
 public class Friend {
-    public static MemoryUserApplication friend;
+    public static MemoryUserApplication friend=null;
 }

@@ -78,7 +78,6 @@ public class HallFace extends Application {
                 //下线了；
                 try {
                     System.out.println("下线了");
-                    //Socket socket = new Socket("127.0.0.1", 7777);
                     ObjectOutputStream oos = new ObjectOutputStream(User.socket.getOutputStream());
                     EmailApplication shuju = new EmailApplication(User.mailbox);
                     oos.writeObject(new AllApplication<>("下线了", shuju));

@@ -13,8 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import toolkind.Friends;
 
@@ -26,16 +28,36 @@ import java.util.TimerTask;
 
 public class GroupChatButton implements Initializable {
     @FXML
-    private Button FriendsButton;
+    private Button groupDataButton;//创建群聊按钮
     @FXML
-    private Button addFriendButton;
+    private Button FriendsButton;//切换好友聊天
     @FXML
-    private Button GroupChatButton;
-
+    private Button addFriendButton;//添加好友
     @FXML
-    private Button MyMessageButton;
+    private Button GroupChatButton;//切换群聊按钮
+    @FXML
+    private Button MyMessageButton;//
     @FXML
     private ImageView Avatar;
+    @FXML
+    private Button createGroupButton;
+
+    @FXML
+    private Button searchGroupButton;
+    @FXML
+    private TextField InputBox;
+    @FXML
+    private Button addGroupMemberButton;
+    @FXML
+    private AnchorPane Pane;
+    @FXML
+    private Button emojis;
+
+    @FXML
+    private Button image;
+
+    @FXML
+    private Button sendButton;
 
     @FXML
     private ListView<Friends> ChatList;
@@ -70,6 +92,26 @@ public class GroupChatButton implements Initializable {
         System.out.println("好友申请");
         LoginButton.hall.switchToPage3();
     }
+
+    @FXML
+    void addGroupMember(ActionEvent event) {
+        System.out.println("邀请人进群");
+    }
+
+    @FXML
+    void groupData(ActionEvent event) {
+        System.out.println("群资料");
+    }
+
+    @FXML
+    void createGroup(ActionEvent event) {
+        System.out.println("创建群聊");
+    }
+
+    @FXML
+    void searchGroup(ActionEvent event) {
+        System.out.println("搜索群聊");
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(User.avatar!=null) {
@@ -87,6 +129,25 @@ public class GroupChatButton implements Initializable {
         }else{
             PersonalData.stagex.toFront();
         }
+    }
+    @FXML
+    void send(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onEmojis(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onFile(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onImage(ActionEvent event) {
+
     }
     protected void flushed() {
         Timer timer = new Timer();

@@ -1,24 +1,33 @@
 package client.control;
 
+import application.ImageApplication;
 import application.MemoryUserApplication;
 import client.view.FriendData;
 import client.view.PersonalData;
 import client.vo.Friend;
 import client.vo.User;
+import com.sun.org.apache.bcel.internal.generic.FSUB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import application.ChatData;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class ChatDataListButton {
+public class ChatDataListButton implements Initializable {
 
     @FXML
     private ImageView myImage;//我的头像
@@ -27,10 +36,10 @@ public class ChatDataListButton {
     private ImageView friendImage;//朋友的头像
 
     @FXML
-    private Text myMessage;//我发的消息
+    private TextFlow myMessage;//我发的消息
 
     @FXML
-    private Text friendMessage;//朋友发的消息
+    private TextFlow friendMessage;//朋友发的消息
 
     @FXML
     private AnchorPane Pane1;//背景布
@@ -43,6 +52,8 @@ public class ChatDataListButton {
 
     @FXML
     private Button myDataButton;//看自己资料按钮，可以修改资料
+    private ChatData chatData;
+
     private Function<Void, Void> clickEvent;
     @FXML
     void friendData(ActionEvent event) throws Exception {
@@ -68,21 +79,32 @@ public class ChatDataListButton {
         }
     }
     public void setChatDataListView(ChatData data){
+        this.chatData=data;
         if(data.getSendUser().equals(User.mailbox)){
+            friendDataButton.setVisible(false);
             friendImage.setVisible(false);
             friendMessage.setVisible(false);
+            myDataButton.setVisible(true);
             myImage.setVisible(true);
             myMessage.setVisible(true);
             myImage.setImage(new Image(User.avatar));
-            myMessage.setText(data.getMessage());
+            //
+            myMessage.getChildren().clear();
+            setMessage(myMessage,data.getMessage());
+            //
             sendTime.setText(data.getSendTime());
         }else if(data.getSendUser().equals(Friend.friend.getMailbox())){
+            myDataButton.setVisible(false);
             myImage.setVisible(false);
             myMessage.setVisible(false);
+            friendDataButton.setVisible(true);
             friendImage.setVisible(true);
             friendMessage.setVisible(true);
             friendImage.setImage(new Image(Friend.friend.getAvatar()));
-            friendMessage.setText(data.getMessage());
+            //
+            friendMessage.getChildren().clear();
+            setMessage(friendMessage,data.getMessage());
+            //
             sendTime.setText(data.getSendTime());
         }
     }
@@ -96,5 +118,45 @@ public class ChatDataListButton {
     }
     public void setClickEvent(Function<Void, Void> clickEvent) {
         this.clickEvent = clickEvent;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        myMessage.boundsInParentProperty().addListener((observable, oldValue, newValue) -> {
+            Pane1.setPrefWidth(newValue.getWidth()-15);
+            Pane1.setPrefHeight(newValue.getHeight() + 70);
+        });
+        friendMessage.boundsInParentProperty().addListener((observable, oldValue, newValue) -> {
+            Pane1.setPrefWidth(newValue.getWidth()-15);
+            Pane1.setPrefHeight(newValue.getHeight() + 70);
+        });
+        //自适应大小
+    }
+    public void setMessage(TextFlow textFlow,String message){
+        if(chatData.getMessage_type().equals("文本")){
+            String weizhi="file:D:\\QQ\\2385272606\\FileRecv\\静态\\";
+            String regex="\\[([^\\[\\]]+)\\]|([^\\[\\]]+)";//正则表达式
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher=pattern.matcher(message);
+            while(matcher.find()){
+                String matchText = matcher.group();
+                if(matchText.matches("\\[(.*?)\\]")){
+                    String imageName=matchText.substring(1, matchText.length()-1);
+                    //判断该表情包存在不
+
+
+                    ImageView imageView=new ImageView(new Image(weizhi+imageName,30,30,false,true));
+                    textFlow.getChildren().add(imageView);
+                }else {
+                    Text text =new Text(matchText);
+                    text.setFont(new Font(20));
+                    textFlow.getChildren().add(text);
+                }
+            }
+        } else if (chatData.getMessage_type().equals("图片")) {
+            String weizhi="file:D:\\图片\\";
+            ImageView imageView=new ImageView(new Image(weizhi+chatData.getMessage(),160,160,false,true));
+            textFlow.getChildren().add(imageView);
+        }
     }
 }

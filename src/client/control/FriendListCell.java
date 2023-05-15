@@ -39,7 +39,7 @@ public class FriendListCell extends ListCell<Friends> {
                 System.out.println(item.getUser().getUname()+"在和你聊天");
                 try {
                     Friend.friend=item.getUser();
-                    if(FriendChatList.map.get(Friend.friend.getAccount())==null){
+                    if(FriendChatList.map.get(Friend.friend.getMailbox())==null){
                         HallFace.hallButton.beginChat(item.getUser());
                     }else{
                         HallFace.hallButton.flushChat();

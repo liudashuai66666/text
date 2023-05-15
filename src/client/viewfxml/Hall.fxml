@@ -67,7 +67,7 @@
             <Image url="@../photo/相册.png" />
          </image>
       </ImageView>
-      <Button fx:id="emojis" layoutX="338.0" layoutY="506.0" mnemonicParsing="false" onAction="#onEmojis" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="emojisButton" layoutX="338.0" layoutY="506.0" mnemonicParsing="false" onAction="#onEmojis" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <Button fx:id="file" layoutX="389.0" layoutY="506.0" mnemonicParsing="false" onAction="#onFile" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <Button fx:id="image" layoutX="442.0" layoutY="506.0" mnemonicParsing="false" onAction="#onImage" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <Button fx:id="sendButton" layoutX="851.0" layoutY="618.0" mnemonicParsing="false" onAction="#send" prefHeight="34.0" prefWidth="90.0" text="发送">
@@ -75,6 +75,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <AnchorPane fx:id="calico" layoutX="326.0" prefHeight="661.0" prefWidth="642.0" style="-fx-background-color: #ffffff;" />
+      <ListView fx:id="Emojis" layoutX="326.0" layoutY="392.0" prefHeight="114.0" prefWidth="642.0" />
+      <AnchorPane fx:id="calico" layoutX="326.0" layoutY="5.0" prefHeight="651.0" prefWidth="642.0" style="-fx-background-color: #ffffff;" />
    </children>
 </AnchorPane>

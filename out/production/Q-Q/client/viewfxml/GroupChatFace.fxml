@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="661.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupChatButton">
+<AnchorPane prefHeight="661.0" prefWidth="965.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupChatButton">
     <children>
         <AnchorPane prefHeight="661.0" prefWidth="90.0" style="-fx-background-color: #292421;">
             <children>
@@ -48,6 +49,54 @@
                 <Button fx:id="FriendApplicationButton" layoutX="24.0" layoutY="223.0" mnemonicParsing="false" onAction="#FriendApplication" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
             </children>
         </AnchorPane>
-        <ListView fx:id="ChatList" layoutX="90.0" prefHeight="661.0" prefWidth="232.0" />
+        <ListView fx:id="ChatList" layoutX="90.0" layoutY="62.0" prefHeight="600.0" prefWidth="243.0" />
+      <ImageView fitHeight="36.0" fitWidth="42.0" layoutX="919.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/省略号.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="addGroupMemberButton" layoutX="919.0" layoutY="12.0" mnemonicParsing="false" onAction="#addGroupMember" opacity="0.0" prefHeight="36.0" prefWidth="36.0" />
+      <Button fx:id="groupDataButton" layoutX="339.0" layoutY="6.0" mnemonicParsing="false" onAction="#groupData" style="-fx-background-color: #ffffff;">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Line endX="535.0" layoutX="433.0" layoutY="61.0" opacity="0.3" startX="-100.0" />
+      <Line endX="20.0" layoutX="343.0" layoutY="31.0" opacity="0.3" rotate="90.0" startX="-40.0" />
+      <TextField fx:id="InputBox" layoutX="96.0" layoutY="19.0" prefHeight="30.0" prefWidth="162.0" />
+      <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="264.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/搜索.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="300.0" layoutY="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/加号1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="createGroupButton" layoutX="299.0" layoutY="19.0" mnemonicParsing="false" onAction="#createGroup" opacity="0.0" prefHeight="29.0" prefWidth="31.0" />
+      <Button fx:id="searchGroupButton" layoutX="263.0" layoutY="20.0" mnemonicParsing="false" onAction="#searchGroup" opacity="0.0" prefHeight="29.0" prefWidth="31.0" />
+      <ListView layoutX="333.0" layoutY="62.0" prefHeight="490.0" prefWidth="636.0" />
+      <TextArea fx:id="inputMessageBox" layoutX="333.0" layoutY="598.0" prefHeight="61.0" prefWidth="574.0" wrapText="true" />
+      <Button fx:id="sendButton" layoutX="911.0" layoutY="608.0" mnemonicParsing="false" onAction="#send" prefHeight="42.0" prefWidth="51.0" text="发送" />
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="343.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/表情包.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="396.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/文件.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="450.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../photo/相册.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="emojis" layoutX="343.0" layoutY="552.0" mnemonicParsing="false" onAction="#onEmojis" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="file" layoutX="396.0" layoutY="552.0" mnemonicParsing="false" onAction="#onFile" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <Button fx:id="image" layoutX="450.0" layoutY="552.0" mnemonicParsing="false" onAction="#onImage" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
+      <AnchorPane fx:id="Pane" layoutX="333.0" prefHeight="662.0" prefWidth="636.0" style="-fx-background-color: #ffffff;" />
     </children>
 </AnchorPane>

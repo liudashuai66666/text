@@ -79,27 +79,32 @@ public class NewFriendButton implements Initializable {
         System.out.println("好友申请");
     }
     public void flush(){
-        ChatList.getItems().clear();
-        ArrayList<Friends> data2=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.newFriendList3) {
-            Friends friends=new Friends("被拒绝",m);
-            data2.add(friends);
-        }
-        ChatList.getItems().addAll(data2);
-        ArrayList<Friends> data=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.newFriendList1) {
-            Friends friends=new Friends("发送",m);
-            data.add(friends);
-        }
-        ChatList.getItems().addAll(data);
-        ArrayList<Friends> data1=new ArrayList<>();
-        for (MemoryUserApplication m : FriendList.newFriendList2) {
-            Friends friends=new Friends("接收",m);
-            data1.add(friends);
-            System.out.println(friends.getUser().getUname()+"想加你");
-        }
-        ChatList.getItems().addAll(data1);
-        ChatList.refresh();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ChatList.getItems().clear();
+                ArrayList<Friends> data2=new ArrayList<>();
+                for (MemoryUserApplication m : FriendList.newFriendList3) {
+                    Friends friends=new Friends("被拒绝",m);
+                    data2.add(friends);
+                }
+                ChatList.getItems().addAll(data2);
+                ArrayList<Friends> data=new ArrayList<>();
+                for (MemoryUserApplication m : FriendList.newFriendList1) {
+                    Friends friends=new Friends("发送",m);
+                    data.add(friends);
+                }
+                ChatList.getItems().addAll(data);
+                ArrayList<Friends> data1=new ArrayList<>();
+                for (MemoryUserApplication m : FriendList.newFriendList2) {
+                    Friends friends=new Friends("接收",m);
+                    data1.add(friends);
+                    System.out.println(friends.getUser().getUname()+"想加你");
+                }
+                ChatList.getItems().addAll(data1);
+                ChatList.refresh();
+            }
+        });
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -4,6 +4,7 @@ import application.AddFriendApplication;
 import application.AllApplication;
 import application.MemoryUserApplication;
 import client.tool.FriendListDelete;
+import client.view.FriendData;
 import client.view.HallFace;
 import client.vo.*;
 import javafx.event.ActionEvent;
@@ -69,10 +70,12 @@ public class FriendDataButton {
                     ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
                     AddFriendApplication shuju=new AddFriendApplication(User.account,Friend.friend.getAccount(),User.mailbox,Friend.friend.getMailbox());
                     oos.writeObject(new AllApplication<>("删除好友",shuju));
-                    FriendListDelete.delete(FriendList.friendList,Friend.friend.getAccount());
                     //刷新
+                    FriendListDelete.delete(FriendList.friendList,Friend.friend.getAccount());
                     HallFace.hallButton.getCalico().setVisible(true);
                     HallFace.hallButton.flush();
+                    FriendData.stagex.close();
+                    FriendChatList.map.get(Friend.friend.getMailbox()).clear();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -84,11 +87,6 @@ public class FriendDataButton {
         alert.show();
 
     }
-/*    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        DeleteFriendButton.setVisible(false);
-        flush(Friend.friend);
-    }*/
     public void flush(MemoryUserApplication user,String flag){
         //DeleteFriendButton.setVisible(true);//删除好友按钮
         if(flag.equals("未添加")){
