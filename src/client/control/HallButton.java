@@ -17,11 +17,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import toolkind.Friends;
@@ -29,7 +27,6 @@ import toolkind.Friends;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -88,7 +85,14 @@ public class HallButton implements Initializable {
     }
 
     @FXML
-    void GroupChat(ActionEvent event) {
+    void GroupChat(ActionEvent event) throws IOException {
+        if(GroupList.groupList==null){
+            System.out.println("初始化群聊列表");
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            FindFriendApplication shuju=new FindFriendApplication(User.mailbox);
+            oos.writeObject(new AllApplication<>("群聊列表",shuju));
+        }
+        HallFace.groupChatButton.flush();
         System.out.println("群聊");
         LoginButton.hall.switchToPage2();
     }//切换群聊方法
@@ -96,6 +100,12 @@ public class HallButton implements Initializable {
     void FriendApplication(ActionEvent event) throws IOException {
         System.out.println("好友申请");
         LoginButton.hall.switchToPage3();
+        if(GroupList.groupList==null){
+            System.out.println("初始化群聊列表");
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            FindFriendApplication shuju=new FindFriendApplication(User.mailbox);
+            oos.writeObject(new AllApplication<>("群聊列表",shuju));
+        }
     }//切换好友申请面板方法
     @FXML
     void Friends(ActionEvent event) {

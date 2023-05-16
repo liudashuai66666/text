@@ -112,8 +112,10 @@ public class LoginButton implements Initializable {
                 hall.start(new Stage());
                 User.socket=socket;
                 System.out.println("登录成功！");
+                System.out.println("初始化群聊列表");
                 SendApplicationLong sendApplicationLong = new SendApplicationLong();
                 sendApplicationLong.start();//开启长连接
+                System.out.println("初始化群聊列表");
             } else if (flag == 2) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("密码错误或者该账号已经登录");

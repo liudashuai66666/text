@@ -11,6 +11,7 @@ public class LoginFace extends Application {
         Parent root = FXMLLoader.load(LoginFace.class.getResource("../viewfxml/LoginFace.fxml"));
         stage.setTitle("登录");
         stage.setScene(new Scene(root, 772, 455));
+        stage.setResizable(false);
         stage.show();
     }
     public static void main(String[] args) {

@@ -13,6 +13,7 @@ public class PersonalData extends Application {
         stage.setTitle("个人资料");
         stage.setScene(new Scene(root, 333, 431));
         stage.show();
+        stage.setResizable(false);
         stagex=stage;
     }
     public static void main(String[] args) {

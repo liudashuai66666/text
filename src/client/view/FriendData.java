@@ -17,6 +17,7 @@ public class FriendData extends Application {
         friendDataButton=fxmlLoader.getController();
         stage.setTitle("好友资料");
         stage.setScene(new Scene(root,333,431));
+        stage.setResizable(false);
         stage.show();
         stagex=stage;
     }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="Pane" prefHeight="71.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupListButton">
+    <children>
+        <ImageView fx:id="Avatar" fitHeight="51.0" fitWidth="58.0" layoutX="6.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+        <Text fx:id="Name" layoutX="65.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.30029296875">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>

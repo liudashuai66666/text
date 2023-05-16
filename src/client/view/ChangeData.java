@@ -18,6 +18,7 @@ public class ChangeData extends Application {
         stage.setTitle("修改资料");
         stage.setScene(new Scene(root,511,542));
         stage.show();
+        stage.setResizable(false);
         stagex=stage;
     }
     public static void main(String[] args) {

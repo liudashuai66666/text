@@ -44,6 +44,7 @@ public class HallFace extends Application {
 
         stage.setTitle("大厅");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         //stagex = stage;
         Listenner(stage);//调用

@@ -13,6 +13,7 @@ public class EnrollFace extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../viewfxml/EnrollFace.fxml"));
         stage.setTitle("注册");
         stage.setScene(new Scene(root,581,799));
+        stage.setResizable(false);
         stage.show();
     }
     public static void main(String[] args) {

@@ -1,12 +1,15 @@
 package client.control;
 
+import application.AllApplication;
+import application.FindFriendApplication;
+import application.GroupApplication;
 import application.MemoryUserApplication;
 import client.view.AddFriend;
 import client.view.HallFace;
 import client.view.PersonalData;
 import client.vo.FindUser;
-import client.vo.FriendList;
 import client.vo.User;
+import client.vo.GroupList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,18 +20,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import toolkind.Friends;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GroupChatButton implements Initializable {
     @FXML
-    private Button groupDataButton;//创建群聊按钮
+    private Button groupDataButton;//群聊资料按钮
     @FXML
     private Button FriendsButton;//切换好友聊天
     @FXML
@@ -36,42 +40,45 @@ public class GroupChatButton implements Initializable {
     @FXML
     private Button GroupChatButton;//切换群聊按钮
     @FXML
-    private Button MyMessageButton;//
+    private Button MyMessageButton;//个人资料按钮
     @FXML
-    private ImageView Avatar;
+    private ImageView Avatar;//头像
     @FXML
-    private Button createGroupButton;
+    private Button createGroupButton;//创建群聊按钮
 
     @FXML
-    private Button searchGroupButton;
+    private Button searchGroupButton;//搜索群聊按钮
     @FXML
-    private TextField InputBox;
+    private TextField InputBox;//搜索群聊框
     @FXML
-    private Button addGroupMemberButton;
+    private Button addGroupMemberButton;//添加群聊成员按钮
     @FXML
-    private AnchorPane Pane;
+    private AnchorPane Pane;//遮挡板
     @FXML
-    private Button emojis;
+    private Button emojis;//表情包
 
     @FXML
-    private Button image;
+    private Button image;//图片发送
 
     @FXML
-    private Button sendButton;
-
+    private Button sendButton;//发送信息按钮
     @FXML
-    private ListView<Friends> ChatList;
+    private ListView<GroupApplication> ChatList;//群聊链表，到时候不能用Friend
     @FXML
-    private Button FriendApplicationButton;
-
+    private ListView<?> ChatMessageList;//聊天记录
+    @FXML
+    private Button FriendApplicationButton;//切换好友申请按钮
     @FXML
     void GroupChat(ActionEvent event) {
         System.out.println("群聊");
+        Pane.setVisible(true);
+        HallFace.groupChatButton.flush();
     }
 
     @FXML
     void Friends(ActionEvent event) {
         System.out.println("私聊");
+        Pane.setVisible(true);
         LoginButton.hall.switchToPage1();
         //转化到私聊界面
     }
@@ -90,6 +97,7 @@ public class GroupChatButton implements Initializable {
     @FXML
     void FriendApplication(ActionEvent event) {
         System.out.println("好友申请");
+        Pane.setVisible(true);
         LoginButton.hall.switchToPage3();
     }
 
@@ -111,16 +119,13 @@ public class GroupChatButton implements Initializable {
     @FXML
     void searchGroup(ActionEvent event) {
         System.out.println("搜索群聊");
-    }
+    }//搜索群聊
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(User.avatar!=null) {
-            Avatar.setImage(new Image(User.avatar));
-        }else{
-            Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
-        }
+        ChatList.setCellFactory(param -> new GroupListCell());
+        Avatar.setImage(new Image(User.avatar));
         flushed();
-    }
+    }//初始化函数
     @FXML
     void MyMessage(ActionEvent event) throws Exception {
         PersonalData personalData = new PersonalData();
@@ -129,26 +134,42 @@ public class GroupChatButton implements Initializable {
         }else{
             PersonalData.stagex.toFront();
         }
-    }
+    }//个人资料
     @FXML
     void send(ActionEvent event) {
 
-    }
+    }//发送消息
 
     @FXML
     void onEmojis(ActionEvent event) {
 
-    }
+    }//表情包
 
     @FXML
     void onFile(ActionEvent event) {
 
-    }
+    }//文件
 
     @FXML
     void onImage(ActionEvent event) {
 
-    }
+    }//图片
+    public void flush(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(GroupList.groupList!=null){
+                    ChatList.getItems().clear();
+                    ChatList.getItems().addAll(GroupList.groupList);
+                    ChatList.refresh();
+                }
+            }
+        });
+    }//刷新好友列表
+    public void startChat(GroupApplication shuju){
+        Pane.setVisible(false);
+        groupDataButton.setText(shuju.getGroup_name());
+    }//开始聊天
     protected void flushed() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -157,11 +178,7 @@ public class GroupChatButton implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            if(User.avatar!=null) {
-                                Avatar.setImage(new Image(User.avatar));
-                            }else{
-                                Avatar.setImage(new Image("File:D://IDEA liu_da_shuai//Q_Q//src//client//photo//qq.png"));
-                            }
+                            Avatar.setImage(new Image(User.avatar));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

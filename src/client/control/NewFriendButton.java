@@ -1,10 +1,14 @@
 package client.control;
 
+import application.AllApplication;
+import application.FindFriendApplication;
 import application.MemoryUserApplication;
 import client.view.AddFriend;
+import client.view.HallFace;
 import client.view.PersonalData;
 import client.vo.FindUser;
 import client.vo.FriendList;
+import client.vo.GroupList;
 import client.vo.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,6 +21,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import toolkind.Friends;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -50,8 +56,15 @@ public class NewFriendButton implements Initializable {
     }
 
     @FXML
-    void GroupChat(ActionEvent event) {
+    void GroupChat(ActionEvent event) throws IOException {
+        if(GroupList.groupList==null){
+            System.out.println("初始化群聊列表");
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            FindFriendApplication shuju=new FindFriendApplication(User.mailbox);
+            oos.writeObject(new AllApplication<>("群聊链表",shuju));
+        }
         System.out.println("群聊");
+        HallFace.groupChatButton.flush();
         LoginButton.hall.switchToPage2();
     }
 

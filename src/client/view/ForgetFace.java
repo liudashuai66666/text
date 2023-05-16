@@ -13,6 +13,7 @@ public class ForgetFace extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../viewfxml/ForgetFace.fxml"));
         stage.setTitle("忘记密码");
         stage.setScene(new Scene(root,581,799));
+        stage.setResizable(false);
         stage.show();
     }
     public static void main(String[] args) {

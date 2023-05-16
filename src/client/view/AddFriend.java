@@ -14,6 +14,7 @@ public class AddFriend extends Application {
         stage.setTitle("添加好友");
         stage.setScene(new Scene(root,405,407));
         stage.show();
+        stage.setResizable(false);
         stagex=stage;
     }
     public static void main(String[] args) {
