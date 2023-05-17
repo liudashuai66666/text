@@ -88,6 +88,7 @@ public class LoginButton implements Initializable {
                 //ObjectInputStream ois1 = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 FriendListData friendListData = (FriendListData) ois.readObject();
                 MemoryUserApplication user = friendListData.getUser();
+                User1.user=user;
                 Friend.friend=user;
                 User.uname = user.getUname();
                 User.account = user.getAccount();

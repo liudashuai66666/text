@@ -33,7 +33,7 @@ public class GroupListButton {
     private Text Name;
     private Function<Void, Void> clickEvent;
     private GroupApplication group;//列表的用户数据；
-
+    //public static int level;//自己在该群聊里面的身份
     public AnchorPane getCellPane() {
         Pane.setOnMouseClicked(event -> {
             if (clickEvent != null) {

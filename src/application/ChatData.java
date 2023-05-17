@@ -17,7 +17,6 @@ public class ChatData implements Serializable {
         this.receiver = receiver;
         this.message_type = message_type;
     }
-
     public String getMessage() {
         return message;
     }

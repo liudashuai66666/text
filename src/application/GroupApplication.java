@@ -3,16 +3,15 @@ package application;
 import java.io.Serializable;
 
 public class GroupApplication implements Serializable {
-    private String group_id;
-    private int group_level;
-    private String group_avatar;
-    private String group_name;
-    private String group_data;
-    private String group_time;
+    private String group_id;//群id
+    private int group_level;//我在群里面的身份
+    private String group_avatar;//群头像
+    private String group_name;//群名
+    private String group_data;//群资料
+    private String group_time;//创造群的时间
 
     public GroupApplication() {
     }
-
     public GroupApplication(String group_id, int group_level, String group_avatar, String group_name, String group_data, String group_time) {
         this.group_id = group_id;
         this.group_level = group_level;

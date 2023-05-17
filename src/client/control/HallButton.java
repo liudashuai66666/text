@@ -1,6 +1,8 @@
 package client.control;
 
 import application.*;
+import client.controlList.FriendListCell;
+import client.controlList.messageListCell;
 import client.view.AddFriend;
 import client.view.HallFace;
 import client.view.PersonalData;

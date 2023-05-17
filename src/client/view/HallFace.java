@@ -27,6 +27,7 @@ public class HallFace extends Application {
     public static HallButton hallButton;
     public static GroupChatButton groupChatButton;
     public static NewFriendButton newFriendButton;
+    public static Stage stagex;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -45,6 +46,7 @@ public class HallFace extends Application {
         stage.setTitle("大厅");
         stage.setScene(scene);
         stage.setResizable(false);
+        stagex=stage;
         stage.show();
         //stagex = stage;
         Listenner(stage);//调用

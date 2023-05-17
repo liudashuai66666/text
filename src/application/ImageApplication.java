@@ -3,7 +3,7 @@ package application;
 import java.io.Serializable;
 
 public class ImageApplication implements Serializable {
-    private int flag;//标记，1代表表情包，2代表图片
+    private int flag;//标记，1代表表情包，2代表图片，3代表群聊表情包，4代表群聊图片
     private String imageName;
     private byte[] bytes;
     private String sender;//发送者

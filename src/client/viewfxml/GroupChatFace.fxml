@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="661.0" prefWidth="965.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupChatButton">
+<AnchorPane prefHeight="662.0" prefWidth="1252.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupChatButton">
     <children>
         <AnchorPane prefHeight="662.0" prefWidth="90.0" style="-fx-background-color: #292421;">
             <children>
@@ -97,6 +97,7 @@
       <Button fx:id="emojis" layoutX="343.0" layoutY="552.0" mnemonicParsing="false" onAction="#onEmojis" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <Button fx:id="file" layoutX="396.0" layoutY="552.0" mnemonicParsing="false" onAction="#onFile" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <Button fx:id="image" layoutX="450.0" layoutY="552.0" mnemonicParsing="false" onAction="#onImage" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
-      <AnchorPane fx:id="Pane" layoutX="335.0" prefHeight="661.0" prefWidth="636.0" style="-fx-background-color: #ffffff;" />
+      <ListView fx:id="Emojis" layoutX="333.0" layoutY="456.0" prefHeight="96.0" prefWidth="636.0" />
+      <AnchorPane fx:id="Pane" layoutX="333.0" layoutY="1.0" prefHeight="661.0" prefWidth="636.0" style="-fx-background-color: #ffffff;" />
     </children>
 </AnchorPane>

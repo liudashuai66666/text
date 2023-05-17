@@ -1,5 +1,6 @@
-package client.control;
+package client.controlList;
 
+import client.control.ListFaceButton;
 import client.view.HallFace;
 import client.vo.Friend;
 import client.vo.FriendChatList;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="434.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.GroupDataButton">
+   <children>
+      <Text fx:id="groupID" layoutX="71.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="232.001953125">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="13.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="群ID：" wrappingWidth="55.001953125">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="groupAvatar" fitHeight="95.0" fitWidth="91.0" layoutX="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Text layoutX="13.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="群名：" wrappingWidth="55.001953125">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="groupName" layoutX="71.0" layoutY="198.0" prefHeight="23.0" prefWidth="232.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Text layoutX="14.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="群介绍：">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="groutData" layoutX="16.0" layoutY="295.0" prefHeight="85.0" prefWidth="288.0" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="noChangeButton" layoutX="16.0" layoutY="390.0" mnemonicParsing="false" onAction="#noChange" text="取消" />
+      <Button fx:id="okChangeButton" layoutX="254.0" layoutY="390.0" mnemonicParsing="false" onAction="#okChange" text="确定" />
+      <Button fx:id="imageButton" layoutX="115.0" layoutY="14.0" mnemonicParsing="false" onAction="#imageButton" opacity="0.0" prefHeight="95.0" prefWidth="91.0" />
+   </children>
+</AnchorPane>

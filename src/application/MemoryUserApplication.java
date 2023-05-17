@@ -11,6 +11,7 @@ public class MemoryUserApplication implements Serializable {
     private String signature;//个性签名
     private String age;//年龄
     private String avatar;//头像
+    private int level;//群身份
     public MemoryUserApplication() {
     }
     public MemoryUserApplication(String uname, String account, String sex, String mailbox, String birthday, String signature, String age, String avatar) {
@@ -72,5 +73,13 @@ public class MemoryUserApplication implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

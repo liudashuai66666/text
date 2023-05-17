@@ -1,5 +1,6 @@
 package client.control;
 
+import application.GroupChatData;
 import application.ImageApplication;
 import application.MemoryUserApplication;
 import client.view.FriendData;
@@ -22,6 +23,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -53,6 +55,7 @@ public class ChatDataListButton implements Initializable {
     @FXML
     private Button myDataButton;//看自己资料按钮，可以修改资料
     private ChatData chatData;
+    private GroupChatData groupChatData;
 
     private Function<Void, Void> clickEvent;
     @FXML
@@ -108,6 +111,36 @@ public class ChatDataListButton implements Initializable {
             sendTime.setText(data.getSendTime());
         }
     }
+    public void setGroupChat(GroupChatData shuju){
+        groupChatData=shuju;
+        if(shuju.getSender().getMailbox().equals(User.mailbox)){
+            friendDataButton.setVisible(false);
+            friendImage.setVisible(false);
+            friendMessage.setVisible(false);
+            myDataButton.setVisible(true);
+            myImage.setVisible(true);
+            myMessage.setVisible(true);
+            myImage.setImage(new Image(User.avatar));
+            //
+            myMessage.getChildren().clear();
+            setGroupMessage(myMessage,shuju.getSendMessage());
+            //
+            sendTime.setText(shuju.getSendTime());
+        }else{
+            myDataButton.setVisible(false);
+            myImage.setVisible(false);
+            myMessage.setVisible(false);
+            friendDataButton.setVisible(true);
+            friendImage.setVisible(true);
+            friendMessage.setVisible(true);
+            friendImage.setImage(new Image(shuju.getSender().getAvatar()));
+            //
+            friendMessage.getChildren().clear();
+            setGroupMessage(friendMessage, shuju.getSendMessage());
+            //
+            sendTime.setText(shuju.getSendTime());
+        }
+    }
     public AnchorPane getCellPane() {
         Pane1.setOnMouseClicked(event -> {
             if (clickEvent != null) {
@@ -143,8 +176,6 @@ public class ChatDataListButton implements Initializable {
                 if(matchText.matches("\\[(.*?)\\]")){
                     String imageName=matchText.substring(1, matchText.length()-1);
                     //判断该表情包存在不
-
-
                     ImageView imageView=new ImageView(new Image(weizhi+imageName,30,30,false,true));
                     textFlow.getChildren().add(imageView);
                 }else {
@@ -156,6 +187,32 @@ public class ChatDataListButton implements Initializable {
         } else if (chatData.getMessage_type().equals("图片")) {
             String weizhi="file:D:\\图片\\";
             ImageView imageView=new ImageView(new Image(weizhi+chatData.getMessage(),160,160,false,true));
+            textFlow.getChildren().add(imageView);
+        }
+    }
+    public void setGroupMessage(TextFlow textFlow,String message){
+        friendDataButton.setVisible(false);
+        if(groupChatData.getMessageType().equals("文本")){
+            String weizhi="file:D:\\QQ\\2385272606\\FileRecv\\静态\\";
+            String regex="\\[([^\\[\\]]+)\\]|([^\\[\\]]+)";//正则表达式
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher=pattern.matcher(message);
+            while(matcher.find()){
+                String matchText = matcher.group();
+                if(matchText.matches("\\[(.*?)\\]")){
+                    String imageName=matchText.substring(1, matchText.length()-1);
+                    //判断该表情包存在不
+                    ImageView imageView=new ImageView(new Image(weizhi+imageName,30,30,false,true));
+                    textFlow.getChildren().add(imageView);
+                }else {
+                    Text text =new Text(matchText);
+                    text.setFont(new Font(20));
+                    textFlow.getChildren().add(text);
+                }
+            }
+        } else if (groupChatData.getMessageType().equals("图片")) {
+            String weizhi="file:D:\\图片\\";
+            ImageView imageView=new ImageView(new Image(weizhi+groupChatData.getSendMessage(),160,160,false,true));
             textFlow.getChildren().add(imageView);
         }
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.control.CreateGroupButton">
+   <children>
+      <ListView fx:id="list" prefHeight="400.0" prefWidth="259.0" />
+      <Text layoutX="282.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="选择联系人">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="noCreateButton" layoutX="300.0" layoutY="350.0" mnemonicParsing="false" onAction="#noCreate" prefHeight="36.0" prefWidth="82.0" text="取消">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="okCreateButton" layoutX="473.0" layoutY="350.0" mnemonicParsing="false" onAction="#okCreate" prefHeight="36.0" prefWidth="82.0" text="确定">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

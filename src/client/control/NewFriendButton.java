@@ -3,6 +3,7 @@ package client.control;
 import application.AllApplication;
 import application.FindFriendApplication;
 import application.MemoryUserApplication;
+import client.controlList.FriendListCell;
 import client.view.AddFriend;
 import client.view.HallFace;
 import client.view.PersonalData;
