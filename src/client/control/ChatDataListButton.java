@@ -188,6 +188,12 @@ public class ChatDataListButton implements Initializable {
             String weizhi="file:D:\\图片\\";
             ImageView imageView=new ImageView(new Image(weizhi+chatData.getMessage(),160,160,false,true));
             textFlow.getChildren().add(imageView);
+        } else if (chatData.getMessage_type().equals("文件")) {
+            ImageView imageView=new ImageView(new Image("file:D:\\IDEA liu_da_shuai\\Q_Q\\src\\client\\photo\\文件类型-标准图-文件夹.png",100,100,false,true));
+            textFlow.getChildren().add(imageView);
+            Text text =new Text(message);
+            text.setFont(new Font(20));
+            textFlow.getChildren().add(text);
         }
     }
     public void setGroupMessage(TextFlow textFlow,String message){
@@ -214,6 +220,12 @@ public class ChatDataListButton implements Initializable {
             String weizhi="file:D:\\图片\\";
             ImageView imageView=new ImageView(new Image(weizhi+groupChatData.getSendMessage(),160,160,false,true));
             textFlow.getChildren().add(imageView);
+        }else if (groupChatData.getMessageType().equals("文件")) {
+            ImageView imageView=new ImageView(new Image("file:D:\\IDEA liu_da_shuai\\Q_Q\\src\\client\\photo\\文件类型-标准图-文件夹.png",100,100,false,true));
+            textFlow.getChildren().add(imageView);
+            Text text =new Text(message);
+            text.setFont(new Font(20));
+            textFlow.getChildren().add(text);
         }
     }
 }

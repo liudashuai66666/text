@@ -13,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import toolkind.Friends;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -42,9 +44,22 @@ public class GroupChatListCell extends ListCell<GroupChatData> {
             }
             ChatDataListButton chatDataListButton = fxmlLoader.getController();
             chatDataListButton.setGroupChat(item);
-            /*chatDataListButton.setClickEvent(unused -> {//点击事件
+            chatDataListButton.setClickEvent(unused -> {//点击事件
+                if(item.getMessageType().equals("文件")){
+                    System.out.println("打开该文件");
+                    File fileToOpen=new File("D:\\client_file\\"+item.getSendMessage());
+                    if (fileToOpen.exists()) {
+                        try {
+                            Desktop.getDesktop().open(fileToOpen);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("指定的文件不存在.");
+                    }
+                }
                 return null;
-            });*/
+            });
             setText(null);
             setGraphic(chatDataListButton.getCellPane());
         }

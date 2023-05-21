@@ -1,20 +1,19 @@
 package client.control;
 
-import application.AddFriendApplication;
-import application.AllApplication;
-import application.GroupApplication;
-import application.MemoryUserApplication;
+import application.*;
 import client.tool.FriendListDelete;
+import client.view.DeleteGroupUser;
 import client.view.FriendData;
 import client.view.HallFace;
-import client.vo.FindUser;
-import client.vo.FriendList;
-import client.vo.User;
+import client.vo.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import toolkind.Friends;
@@ -33,9 +32,29 @@ public class GroupListButton {
     private Text Name;
     private Function<Void, Void> clickEvent;
     private GroupApplication group;//列表的用户数据；
-    //public static int level;//自己在该群聊里面的身份
+    public int level;
     public AnchorPane getCellPane() {
         Pane.setOnMouseClicked(event -> {
+            if(event.getButton()== MouseButton.SECONDARY){
+                MenuItem quit=new MenuItem("退出群聊");
+                quit.setOnAction((ActionEvent event1)->{
+                    choseGroupUser.groupUser.clear();
+                    choseGroupUser.groupUser.add(User1.user);
+                    try {
+                        GroupUserApplication shuju=new GroupUserApplication(Group.group,choseGroupUser.groupUser);
+                        ObjectOutputStream oos = new ObjectOutputStream(User.socket.getOutputStream());
+                        oos.writeObject(new AllApplication<>("删除成员", shuju));
+                        DeleteGroupUser.stagex.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                ContextMenu contextMenu=new ContextMenu();
+                if(group.getGroup_level()!=1){
+                    contextMenu.getItems().addAll(quit);
+                    contextMenu.show(Avatar,event.getScreenX(),event.getScreenY());
+                }
+            }
             if (clickEvent != null) {
                 clickEvent.apply(null);
             }

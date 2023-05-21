@@ -18,4 +18,5 @@ public class User {
     public static String age;//年龄
     public static String avatar;//头像
     public static Socket socket;//与服务端的连接
+    public static int level;//当前群聊的身份
 }

@@ -3,6 +3,7 @@ package client.control;
 import application.*;
 import client.controlList.GroupChatListCell;
 import client.controlList.GroupListCell;
+import client.controlList.GroupMemberCell;
 import client.view.*;
 import client.vo.*;
 import javafx.application.Platform;
@@ -10,10 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -31,10 +29,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,10 +78,106 @@ public class GroupChatButton implements Initializable {
     private Button FriendApplicationButton;//切换好友申请按钮
     @FXML
     private ListView Emojis;//表情包链表
+    @FXML
+    private Button deleteGroupButton;//删除群聊
+    @FXML
+    private Button addButton;//拉人进群
+    @FXML
+    private Button deleteButton;//踢人出群
+    @FXML
+    private Button setManagerButton;//设置管理员
+    @FXML
+    private ListView<MemoryUserApplication> groupMember;//群成员列表
     public static String path;
+    public int level;
     public final String dizhi="D:/QQ/2385272606/FileRecv/静态/";
     private int cnt=0;
     private int cnt1=0;
+    @FXML
+    void add(ActionEvent event) throws Exception {
+        choseGroupUser.groupUser.clear();
+        System.out.println("邀请成员");
+        AddGroupUser addGroupUser=new AddGroupUser();
+        if(!addGroupUser.stagex.isShowing()){
+            addGroupUser.start(new Stage());
+        }else {
+            addGroupUser.stagex.toFront();
+        }
+        AddGroupUser.addGroupUserButton.flush();
+    }
+
+    @FXML
+    void delete(ActionEvent event) throws Exception {
+        System.out.println("踢人出群");
+        choseGroupUser.groupUser.clear();
+        DeleteGroupUser deleteGroupUser=new DeleteGroupUser("删除成员");
+        if(!deleteGroupUser.stagex.isShowing()){
+            deleteGroupUser.start(new Stage());
+        }else {
+            deleteGroupUser.stagex.toFront();
+        }
+        deleteGroupUser.deleteGroupUserButton.delete();
+        DeleteGroupUser.deleteGroupUserButton.flush();
+    }
+
+    @FXML
+    void setManager(ActionEvent event) throws Exception {
+        System.out.println("设置管理员！");
+        choseGroupUser.groupUser.clear();
+        DeleteGroupUser deleteGroupUser=new DeleteGroupUser("设置管理员");
+        if(!deleteGroupUser.stagex.isShowing()){
+            deleteGroupUser.start(new Stage());
+        }else {
+            deleteGroupUser.stagex.toFront();
+        }
+        deleteGroupUser.deleteGroupUserButton.set();
+        DeleteGroupUser.deleteGroupUserButton.flush();
+    }
+    public void close(){
+        Pane.setVisible(true);
+        HallFace.stagex.setWidth(985);
+        cnt=0;
+    }
+    @FXML
+    void deleteGroup(ActionEvent event) {
+        System.out.println("你要删除该群聊!");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("确认对话框");
+        alert.setHeaderText("请确认您的操作");
+        alert.setContentText("是否删除该群聊！");
+// 添加“确认”和“取消”按钮
+        ButtonType okButton = new ButtonType("确认", ButtonBar.ButtonData.YES);
+        ButtonType cancelButton = new ButtonType("取消", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+// 设置点击回调函数
+        alert.setResultConverter(buttonType -> {
+            if (buttonType == okButton) {
+                //1.先在自己的列表里面将该用户的数据删除，然后发送请求给服务端，在服务端里面将该条好友消息清除，然后再反馈给你删除的那个好友删除记录
+                try {
+                    ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+                    oos.writeObject(new AllApplication<>("删除群聊",Group.group));
+                    //刷新
+                    Iterator<GroupApplication> it=GroupList.groupList.iterator();
+                    while (it.hasNext()){
+                        GroupApplication m=it.next();
+                        if(m.getGroup_id().equals(Group.group.getGroup_id())){
+                            it.remove();
+                            break;
+                        }
+                    }
+                    HallFace.groupChatButton.flush();
+                    HallFace.groupChatButton.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (buttonType == cancelButton) {
+                alert.close();
+            }
+            return null;
+        });
+        alert.show();
+
+    }
     @FXML
     void GroupChat(ActionEvent event) {
         System.out.println("群聊");
@@ -122,15 +213,52 @@ public class GroupChatButton implements Initializable {
 
     @FXML
     void addGroupMember(ActionEvent event) {
+        flushUser();
+        xiugaiLevel();
         System.out.println("邀请人进群");
+        choseGroupUser.groupUser.clear();
         cnt++;
+        User1.user.setLevel(level);
+        User.level=level;
         if(cnt%2==1){
+            if(level==2){
+                gly();
+            } else if (level == 3) {
+                chengyuan();
+            } else if (level == 1) {
+                qunzhu();
+            }
             HallFace.stagex.setWidth(1252);
         }else{
             HallFace.stagex.setWidth(985);
         }
     }
-
+    public void xiugaiLevel(){
+        for (GroupApplication m : GroupList.groupList) {
+            if(m.getGroup_id().equals(Group.group.getGroup_id())){
+                level=m.getGroup_level();
+                break;
+            }
+        }
+    }
+    public void qunzhu(){
+        addButton.setVisible(true);
+        deleteButton.setVisible(true);
+        deleteGroupButton.setVisible(true);
+        setManagerButton.setVisible(true);
+    }
+    public void gly(){
+        addButton.setVisible(true);
+        deleteButton.setVisible(true);
+        deleteGroupButton.setVisible(false);
+        setManagerButton.setVisible(false);
+    }
+    public void chengyuan(){
+        addButton.setVisible(true);
+        deleteButton.setVisible(false);
+        deleteGroupButton.setVisible(false);
+        setManagerButton.setVisible(false);
+    }
     @FXML
     void groupData(ActionEvent event) throws Exception {
         System.out.println("群资料");
@@ -145,6 +273,7 @@ public class GroupChatButton implements Initializable {
     @FXML
     void createGroup(ActionEvent event) throws Exception {
         System.out.println("创建群聊");
+        choseGroupUser.groupUser.clear();
         CreateGroup cGroup=new CreateGroup();
         if(!cGroup.stagex.isShowing()){
             cGroup.start(new Stage());
@@ -208,13 +337,40 @@ public class GroupChatButton implements Initializable {
     }//表情包
 
     @FXML
-    void onFile(ActionEvent event) {
-
+    void onFile(ActionEvent event) throws IOException {
+        System.out.println("发文件");
+        UUID uuid;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("发送文件");//设置窗口名字
+        fileChooser.setInitialDirectory(new File("D:\\client_file"));//打开的位置
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("所有文件","*.*"));//选择指定文件类型
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if(selectedFile!=null){
+            path=selectedFile.getAbsolutePath();
+            System.out.println("您选择的文件是："+selectedFile.getName());
+            byte[] bytes=Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
+            uuid=UUID.nameUUIDFromBytes(bytes);
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            oos.writeObject(new AllApplication<>("发文件",new FileApplication(1,uuid+selectedFile.getName(),bytes,User.mailbox,Friend.friend.getMailbox())));
+            FileOutputStream fos=new FileOutputStream("D:\\client_file\\"+uuid+selectedFile.getName());
+            fos.write(bytes);
+        }else {
+            return;
+        }
+        ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+        GroupChatData shuju = new GroupChatData(Group.group.getGroup_id(),User1.user,time,uuid+selectedFile.getName(),"文件");
+        oos.writeObject(new AllApplication<>("发群聊消息",shuju));
+        GroupUserMap.groupChatDataMap.get(Group.group.getGroup_id()).add(shuju);
+        HallFace.groupChatButton.flushChat();
     }//文件
 
     @FXML
     void onImage(ActionEvent event) throws IOException {
         //System.out.println("发图片");
+        UUID uuid;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
         FileChooser fileChooser = new FileChooser();
@@ -227,15 +383,16 @@ public class GroupChatButton implements Initializable {
             path=selectedFile.getAbsolutePath();
             System.out.println("您选择的图片是："+selectedFile.getName());
             byte[] bytes=Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
+            uuid=UUID.nameUUIDFromBytes(bytes);
             ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
-            oos.writeObject(new AllApplication<>("图片",new ImageApplication(4,selectedFile.getName(),bytes,User.mailbox,Friend.friend.getMailbox())));
-            FileOutputStream fos=new FileOutputStream("D:\\图片\\"+selectedFile.getName());
+            oos.writeObject(new AllApplication<>("图片",new ImageApplication(4,uuid+".jpg",bytes,User.mailbox,Friend.friend.getMailbox())));
+            FileOutputStream fos=new FileOutputStream("D:\\图片\\"+uuid+".jpg");
             fos.write(bytes);
         }else {
             return;
         }
         ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
-        GroupChatData shuju = new GroupChatData(Group.group.getGroup_id(),User1.user,time,selectedFile.getName(), "图片");
+        GroupChatData shuju = new GroupChatData(Group.group.getGroup_id(),User1.user,time,uuid+".jpg", "图片");
         oos.writeObject(new AllApplication<>("发群聊消息",shuju));
         GroupUserMap.groupChatDataMap.get(Group.group.getGroup_id()).add(shuju);
         HallFace.groupChatButton.flushChat();
@@ -261,6 +418,24 @@ public class GroupChatButton implements Initializable {
                     ChatMessageList.getItems().clear();
                     ChatMessageList.getItems().addAll(GroupUserMap.groupChatDataMap.get(Group.group.getGroup_id()));
                     ChatMessageList.refresh();
+                }
+            }
+        });
+    }//刷新聊天列表
+    public void flushUser(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(GroupList.groupList!=null){
+                    groupMember.getItems().clear();
+                    try {
+                        ArrayList<MemoryUserApplication>list=GroupUserMap.groupUser.get(Group.group.getGroup_id());
+                        Collections.sort(list, new MemoryUserApplicationComparator());//排序
+                        groupMember.getItems().addAll(list);
+                        groupMember.refresh();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -303,10 +478,13 @@ public class GroupChatButton implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        User1.user.setLevel(level);
+        User.level=level;
         Emojis.setVisible(false);
         TextSetOnKey();
         ChatList.setCellFactory(param -> new GroupListCell());
         ChatMessageList.setCellFactory(param -> new GroupChatListCell());
+        groupMember.setCellFactory(param -> new GroupMemberCell());
         Avatar.setImage(new Image(User.avatar));
         flushed();
         Emojis.setStyle("-fx-background-color: #ffffff; -fx-selection-bar: transparent; -fx-cell-focus-inner-border: transparent;");

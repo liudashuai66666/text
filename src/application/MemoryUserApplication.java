@@ -11,6 +11,7 @@ public class MemoryUserApplication implements Serializable {
     private String signature;//个性签名
     private String age;//年龄
     private String avatar;//头像
+    private String Online_status;//在线状态；
     private int level;//群身份
     public MemoryUserApplication() {
     }
@@ -81,5 +82,13 @@ public class MemoryUserApplication implements Serializable {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getOnline_status() {
+        return Online_status;
+    }
+
+    public void setOnline_status(String online_status) {
+        Online_status = online_status;
     }
 }

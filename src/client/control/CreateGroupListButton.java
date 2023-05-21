@@ -1,6 +1,7 @@
 package client.control;
 
 import application.MemoryUserApplication;
+import client.vo.choseGroupUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -32,9 +33,10 @@ public class CreateGroupListButton {
     void select(ActionEvent event) {
         cnt++;
         if(cnt%2==1){
-            CreateGroupButton.groupUser.add(friends);
+            System.out.println(cnt);
+            choseGroupUser.groupUser.add(friends);
         }else{
-            CreateGroupButton.groupUser.remove(friends);
+            choseGroupUser.groupUser.remove(friends);
         }
     }
     public void jiemian(MemoryUserApplication user){

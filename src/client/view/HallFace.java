@@ -6,6 +6,7 @@ import client.control.GroupChatButton;
 import client.control.HallButton;
 import client.control.NewFriendButton;
 import client.vo.User;
+import client.vo.User1;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Path;
 import java.time.Period;
 
 public class HallFace extends Application {
@@ -82,15 +84,13 @@ public class HallFace extends Application {
                 try {
                     System.out.println("下线了");
                     ObjectOutputStream oos = new ObjectOutputStream(User.socket.getOutputStream());
-                    EmailApplication shuju = new EmailApplication(User.mailbox);
-                    oos.writeObject(new AllApplication<>("下线了", shuju));
+                    oos.writeObject(new AllApplication<>("下线了", User1.user));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
     }
-
     public static void main(String[] args) {
         launch(args);
     }

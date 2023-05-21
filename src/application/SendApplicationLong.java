@@ -9,6 +9,7 @@ import javafx.application.Platform;
 
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.util.Iterator;
 
 import static client.control.HallButton.FilePan;
 
@@ -31,7 +32,6 @@ public class SendApplicationLong extends Thread {
             System.exit(0);
         }
     }
-
     private static void receive(Object obj) throws Exception {
         AllApplication application = (AllApplication) obj;
         String flag = application.getFlag();
@@ -42,6 +42,26 @@ public class SendApplicationLong extends Thread {
         } else if (flag.equals("修改资料")) {
             System.out.println("修改成功！");
             ChangeData.changeDataButton.changeData();
+        } else if (flag.equals("你的好友上线了")) {
+            System.out.println(flag);
+            MemoryUserApplication shuju= (MemoryUserApplication) application.getData();
+            for (MemoryUserApplication m : FriendList.friendList) {
+                if(m.getMailbox().equals(shuju.getMailbox())){
+                    m.setOnline_status(shuju.getOnline_status());
+                    break;
+                }
+            }
+            HallFace.hallButton.flush();
+        } else if (flag.equals("你的好友下线了")) {
+            System.out.println(flag);
+            MemoryUserApplication shuju= (MemoryUserApplication) application.getData();
+            for (MemoryUserApplication m : FriendList.friendList) {
+                if(m.getMailbox().equals(shuju.getMailbox())){
+                    m.setOnline_status(shuju.getOnline_status());
+                    break;
+                }
+            }
+            HallFace.hallButton.flush();
         } else if (flag.equals("查找好友ok")) {
             System.out.println("查到的好友信息");
             MemoryUserApplication user = (MemoryUserApplication) application.getData();
@@ -135,6 +155,16 @@ public class SendApplicationLong extends Thread {
                     System.out.println("这图片你有了");
                 }
             }
+        } else if (flag.equals("文件")) {
+            FileApplication shuju= (FileApplication) application.getData();
+            String dizhi="D:\\client_file\\";
+            if (!FilePan(dizhi + shuju.getFileName())) {
+                System.out.println("这文件你没有啊");
+                FileOutputStream fos = new FileOutputStream(dizhi + shuju.getFileName());
+                fos.write(shuju.getBytes());
+            } else {
+                System.out.println("这文件你有了");
+            }
         } else if (flag.equals("群聊列表")) {
             GroupListData groupList = (GroupListData) application.getData();
             GroupList.groupList = groupList.getGroupList();
@@ -147,15 +177,107 @@ public class SendApplicationLong extends Thread {
         } else if (flag.equals("别人建群了")) {
             GroupUserApplication shuju= (GroupUserApplication) application.getData();
             GroupList.groupList.add(shuju.getGroup());
+            HallFace.groupChatButton.flushUser();
             HallFace.groupChatButton.flush();
+        } else if (flag.equals("这个群被删了")) {
+            GroupApplication shuju= (GroupApplication) application.getData();
+            Iterator<GroupApplication> it= null;
+            try {
+                it = GroupList.groupList.iterator();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (it.hasNext()){
+                GroupApplication m=it.next();
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    it.remove();
+                    break;
+                }
+            }
+            HallFace.groupChatButton.flush();
+            HallFace.groupChatButton.close();
         } else if (flag.equals("群聊成员")) {
             GroupUserApplication shuju= (GroupUserApplication) application.getData();
             Group.user=shuju.getUser();
             GroupUserMap.groupUser.put(shuju.getGroup().getGroup_id(),shuju.getUser());
+            HallFace.groupChatButton.flushUser();
         } else if (flag.equals("群聊消息")) {
             GroupChatDataApplication shuju= (GroupChatDataApplication) application.getData();
             GroupUserMap.groupChatDataMap.put(shuju.getGroup_id(),shuju.getGroupList());
             HallFace.groupChatButton.flushChat();
+        } else if (flag.equals("别人拉你进群了")) {
+            GroupApplication shuju= (GroupApplication) application.getData();
+            shuju.setGroup_level(3);
+            GroupList.groupList.add(shuju);
+            HallFace.groupChatButton.flush();
+        } else if (flag.equals("别人把你删了")) {
+            GroupApplication shuju= (GroupApplication) application.getData();
+            Iterator<GroupApplication> it=GroupList.groupList.iterator();
+            while (it.hasNext()){
+                GroupApplication m=it.next();
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    it.remove();
+                    break;
+                }
+            }
+            HallFace.groupChatButton.flush();
+            HallFace.groupChatButton.close();
+        } else if (flag.equals("你被设置成了管理员")) {
+            System.out.println(flag);
+            GroupApplication shuju= (GroupApplication) application.getData();
+            if(Group.group.getGroup_id().equals(shuju.getGroup_id())){
+                HallFace.groupChatButton.gly();
+            }
+            for (GroupApplication m : GroupList.groupList) {
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    m.setGroup_level(2);
+                    break;
+                }
+            }
+        }else if (flag.equals("你被撤销了管理员")) {
+            System.out.println(flag);
+            GroupApplication shuju= (GroupApplication) application.getData();
+            if(Group.group.getGroup_id().equals(shuju.getGroup_id())){
+                HallFace.groupChatButton.chengyuan();
+            }
+            for (GroupApplication m : GroupList.groupList) {
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    m.setGroup_level(3);
+                    break;
+                }
+            }
+        }else if (flag.equals("你被设置成了群主")) {
+            System.out.println(flag);
+            GroupApplication shuju= (GroupApplication) application.getData();
+            if(Group.group.getGroup_id().equals(shuju.getGroup_id())){
+                HallFace.groupChatButton.qunzhu();
+            }
+            for (GroupApplication m : GroupList.groupList) {
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    m.setGroup_level(1);
+                    break;
+                }
+            }
+            User1.user.setLevel(1);
+        } else if (flag.equals("你转让了群主")) {
+            System.out.println(flag);
+            GroupApplication shuju= (GroupApplication) application.getData();
+            if(Group.group.getGroup_id().equals(shuju.getGroup_id())){
+                HallFace.groupChatButton.gly();
+            }
+            for (GroupApplication m : GroupList.groupList) {
+                if(m.getGroup_id().equals(shuju.getGroup_id())){
+                    m.setGroup_level(2);
+                    break;
+                }
+            }
+            User1.user.setLevel(2);
+        } else if (flag.equals("群聊成员发生了改变")) {
+            System.out.println(flag);
+            GroupUserApplication shuju= (GroupUserApplication) application.getData();
+            GroupUserMap.groupUser.put(shuju.getGroup().getGroup_id(),shuju.getUser());
+            HallFace.groupChatButton.flushUser();
+            HallFace.groupChatButton.flush();
         }
     }
 }

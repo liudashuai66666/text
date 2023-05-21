@@ -99,5 +99,10 @@
       <Button fx:id="image" layoutX="450.0" layoutY="552.0" mnemonicParsing="false" onAction="#onImage" opacity="0.0" prefHeight="42.0" prefWidth="42.0" />
       <ListView fx:id="Emojis" layoutX="333.0" layoutY="456.0" prefHeight="96.0" prefWidth="636.0" />
       <AnchorPane fx:id="Pane" layoutX="333.0" layoutY="1.0" prefHeight="661.0" prefWidth="636.0" style="-fx-background-color: #ffffff;" />
+      <ListView fx:id="groupMember" layoutX="969.0" layoutY="62.0" prefHeight="600.0" prefWidth="282.0" />
+      <Button fx:id="addButton" layoutX="969.0" layoutY="20.0" mnemonicParsing="false" onAction="#add" text="添加" />
+      <Button fx:id="deleteButton" layoutX="1019.0" layoutY="20.0" mnemonicParsing="false" onAction="#delete" text="删除" />
+      <Button fx:id="setManagerButton" layoutX="1067.0" layoutY="20.0" mnemonicParsing="false" onAction="#setManager" text="设管理员" />
+      <Button fx:id="deleteGroupButton" layoutX="1147.0" layoutY="20.0" mnemonicParsing="false" onAction="#deleteGroup" text="删除群聊" />
     </children>
 </AnchorPane>

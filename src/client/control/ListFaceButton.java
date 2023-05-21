@@ -79,6 +79,13 @@ public class ListFaceButton {
         Avatar.setImage(new Image(user.getAvatar()));
         Name.setText(user.getUname());
         if(friends.getFlag().equals("好友")){
+            if(user.getOnline_status().equals("离线")){
+                Avatar.setOpacity(0.5);
+                Name.setOpacity(0.5);
+            }else {
+                Avatar.setOpacity(1);
+                Name.setOpacity(1);
+            }
             okButton.setVisible(false);
             noButton.setVisible(false);
             stateText.setVisible(false);

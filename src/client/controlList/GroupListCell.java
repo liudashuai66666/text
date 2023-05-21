@@ -23,7 +23,6 @@ public class GroupListCell extends ListCell<GroupApplication> {
     @Override
     protected void updateItem(GroupApplication item, boolean empty) {
         super.updateItem(item, empty);
-
         if (empty || item == null) {
             setText(null);
             setGraphic(null);
@@ -39,7 +38,15 @@ public class GroupListCell extends ListCell<GroupApplication> {
             GroupListButton groupListButton = fxmlLoader.getController();
             groupListButton.setGroupList(item);
             groupListButton.setClickEvent(unused -> {//点击事件
+                if(item.getGroup_level()==1){
+                    HallFace.groupChatButton.qunzhu();
+                } else if (item.getGroup_level() == 2) {
+                    HallFace.groupChatButton.gly();
+                } else if (item.getGroup_level() == 3) {
+                    HallFace.groupChatButton.chengyuan();
+                }
                 Group.group=item;//记住当前的群聊
+                HallFace.groupChatButton.level=item.getGroup_level();
                 try {
                     //1.先传成员列表
                     if(GroupUserMap.groupUser.get(item.getGroup_id())==null){
@@ -47,6 +54,7 @@ public class GroupListCell extends ListCell<GroupApplication> {
                         oos.writeObject(new AllApplication<>("群聊成员",item));
                     }else{
                         Group.user=GroupUserMap.groupUser.get(item.getGroup_id());//记住当前群聊的用户列表
+                        HallFace.groupChatButton.flushUser();
                     }
                     //2.再传消息列表
                     if(GroupUserMap.groupChatDataMap.get(item.getGroup_id())==null){

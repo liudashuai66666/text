@@ -35,6 +35,7 @@ public class FriendListCell extends ListCell<Friends> {
                 }
             }
             ListFaceButton listFaceButton = fxmlLoader.getController();
+            System.out.println(item.getUser().getOnline_status());
             listFaceButton.setListView(item);
             listFaceButton.setClickEvent(unused -> {//点击事件
                 System.out.println(item.getUser().getUname()+"在和你聊天");

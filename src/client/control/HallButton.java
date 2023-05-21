@@ -54,38 +54,29 @@ public class HallButton implements Initializable {
     private MemoryUserApplication friend;//该聊天界面的聊天对象
     @FXML
     private ListView Emojis;//表情包预览
-
-
     @FXML
     private Button FriendsButton;//切换私聊按钮
     @FXML
     private Button addFriendButton;//添加好友按钮
     @FXML
     private Button GroupChatButton;//切换群聊画面按钮
-
     @FXML
     private Button MyMessageButton;//查看个人资料按钮
     @FXML
     private ImageView Avatar;//自己头像
     @FXML
     private Button FriendApplicationButton;//切换好友申请面板按钮
-
     @FXML
     private ListView<Friends> ChatList;//好友列表
     private static int cnt=0;
-
     public final String dizhi="D:/QQ/2385272606/FileRecv/静态/";
     public static String path;
-
-
     public ListView<Friends> getChatList() {
         return ChatList;
     }
-
     public void setChatList(ListView<Friends> chatList) {
         ChatList = chatList;
     }
-
     @FXML
     void GroupChat(ActionEvent event) throws IOException {
         if(GroupList.groupList==null){
@@ -140,12 +131,39 @@ public class HallButton implements Initializable {
     }//发送表情包
 
     @FXML
-    void onFile(ActionEvent event) {
+    void onFile(ActionEvent event) throws IOException {
         System.out.println("发文件");
+        UUID uuid;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("发送文件");//设置窗口名字
+        fileChooser.setInitialDirectory(new File("D:\\client_file"));//打开的位置
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("所有文件","*.*"));//选择指定文件类型
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if(selectedFile!=null){
+            path=selectedFile.getAbsolutePath();
+            System.out.println("您选择的文件是："+selectedFile.getName());
+            byte[] bytes=Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
+            uuid=UUID.nameUUIDFromBytes(bytes);
+            ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+            oos.writeObject(new AllApplication<>("发文件",new FileApplication(1,uuid+selectedFile.getName(),bytes,User.mailbox,Friend.friend.getMailbox())));
+            FileOutputStream fos=new FileOutputStream("D:\\client_file\\"+uuid+selectedFile.getName());
+            fos.write(bytes);
+        }else {
+            return;
+        }
+        ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
+        ChatData shuju = new ChatData(uuid+selectedFile.getName(),time,User.mailbox,Friend.friend.getMailbox(), "文件");
+        oos.writeObject(new AllApplication<>("发消息",shuju));
+        FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
+        HallFace.hallButton.flushChat();
     }//发送文件
 
     @FXML
     void onImage(ActionEvent event) throws IOException {
+        UUID uuid;
         //System.out.println("发图片");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
@@ -159,15 +177,16 @@ public class HallButton implements Initializable {
             path=selectedFile.getAbsolutePath();
             System.out.println("您选择的图片是："+selectedFile.getName());
             byte[] bytes=Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
+            uuid=UUID.nameUUIDFromBytes(bytes);
             ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
-            oos.writeObject(new AllApplication<>("图片",new ImageApplication(2,selectedFile.getName(),bytes,User.mailbox,Friend.friend.getMailbox())));
-            FileOutputStream fos=new FileOutputStream("D:\\图片\\"+selectedFile.getName());
+            oos.writeObject(new AllApplication<>("图片",new ImageApplication(2,uuid+".jpg",bytes,User.mailbox,Friend.friend.getMailbox())));
+            FileOutputStream fos=new FileOutputStream("D:\\图片\\"+uuid+".jpg");
             fos.write(bytes);
         }else {
             return;
         }
         ObjectOutputStream oos=new ObjectOutputStream(User.socket.getOutputStream());
-        ChatData shuju = new ChatData(selectedFile.getName(),time,User.mailbox,Friend.friend.getMailbox(), "图片");
+        ChatData shuju = new ChatData(uuid+".jpg",time,User.mailbox,Friend.friend.getMailbox(), "图片");
         oos.writeObject(new AllApplication<>("发消息",shuju));
         FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
         HallFace.hallButton.flushChat();
@@ -199,7 +218,9 @@ public class HallButton implements Initializable {
         ChatData shuju = new ChatData(massage,time,User.mailbox,Friend.friend.getMailbox(), "文本");
         ObjectOutputStream oos =new ObjectOutputStream(User.socket.getOutputStream());
         oos.writeObject(new AllApplication<>("发消息",shuju));
-        FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
+        if(FriendChatList.map.get(Friend.friend.getMailbox())!=null){
+            FriendChatList.map.get(Friend.friend.getMailbox()).add(shuju);
+        }
         HallFace.hallButton.flushChat();
     }//发送消息
     public void flushChat(){
@@ -235,6 +256,7 @@ public class HallButton implements Initializable {
         sendButton.setDefaultButton(true);
         ChatList.setCellFactory(param -> new FriendListCell());
         chatDataList.setCellFactory(param -> new messageListCell());
+
         if(User.avatar!=null) {
             Avatar.setImage(new Image(User.avatar));
         }else{
